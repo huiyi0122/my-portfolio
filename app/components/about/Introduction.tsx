@@ -39,7 +39,7 @@ export default function Introduction({ darkMode }: IntroductionProps) {
         constraintsRef={constraintsRef}
       />
       <DraggableSticker
-        src="/images/sticker/sticker-3.png"
+        src="/images/sticker/sticker-5.png"
         alt="Sticker 3"
         size={110}
         initial={{ bottom: 40, left: 40 }}
