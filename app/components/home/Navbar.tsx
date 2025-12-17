@@ -2,119 +2,197 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Globe, Moon, Sun } from "lucide-react";
-import { useLanguage } from "./LanguageProvider";
+import Link from "next/link";
+import { Globe, Moon, Sun, Menu, X } from "lucide-react";
+import { useLanguage } from "../LanguageProvider";
+import { useDarkMode } from "../DarkModeProvider";
 import { usePathname } from "next/navigation";
 
-interface NavbarProps {
-  darkMode: boolean;
-}
-
-export default function Navbar({ darkMode }: NavbarProps) {
+export default function Navbar() {
   const pathname = usePathname();
-  const [isDark, setIsDark] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { darkMode, toggleDarkMode } = useDarkMode();
+  const [mounted, setMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const htmlClass = document.documentElement.classList;
-    setIsDark(htmlClass.contains("dark"));
-  }, [darkMode]);
+    setMounted(true);
+  }, []);
 
-  const toggleDarkMode = () => {
-    const htmlClass = document.documentElement.classList;
-    if (htmlClass.contains("dark")) {
-      htmlClass.remove("dark");
-      setIsDark(false);
-    } else {
-      htmlClass.add("dark");
-      setIsDark(true);
-    }
-  };
+  if (!mounted) return null;
 
-  const linkColor = (href: string) => {
-    if (isDark) {
-      return pathname === href ? "#FCF0B6" : "#777474";
-    } else {
-      return pathname === href ? "#8B4513" : "#171717";
+  const linkClasses = (href: string) => {
+    const isActive = pathname === href;
+    const baseClasses =
+      "px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg";
+    const activeDark = "bg-slate-800 text-cyan-300";
+    const inactiveDark = "text-slate-300 hover:bg-slate-800 hover:text-white";
+    const activeLight = "bg-slate-200 text-blue-800";
+    const inactiveLight =
+      "text-slate-700 hover:bg-slate-200 hover:text-slate-900";
+
+    if (darkMode) {
+      return `${baseClasses} ${isActive ? activeDark : inactiveDark}`;
     }
+    return `${baseClasses} ${isActive ? activeLight : inactiveLight}`;
   };
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-md transition-colors duration-300 ${
-        isDark ? "bg-gray-900/80" : "bg-white/80"
-      }`}
-    >
-      {" "}
-      <div className="max-w-7xl mx-auto flex justify-between items-center font-instrument font-semibold">
-        {/* Logo */}
+    <>
+      {/* Logo - Top Left */}
+      <Link href="/" className="fixed top-6 left-6 z-50">
         <Image
-          src={
-            isDark
-              ? "/images/logo_dark.png"
-              : "/images/light_mode/home/logo.png"
-          }
+          src={darkMode ? "/images/LOGO-2.png" : "/images/LOGO-2.png"}
           alt="CHY"
           width={60}
           height={60}
-          className="h-10 w-auto"
+          className="h-15 w-auto cursor-pointer transition-all duration-300 hover:opacity-80 hover:drop-shadow-[0_0_8px_rgba(100,210,255,0.5)]"
         />
+      </Link>
 
-        {/* Nav Links */}
-        <div className="flex items-center gap-[12px]">
-          <div className="hidden md:flex gap-[12px]">
-            <a href="/" style={{ color: linkColor("/") }} className="px-2 py-2">
-              {t.nav.home}
-            </a>
-            <a
-              href="/about"
-              style={{ color: linkColor("/about") }}
-              className="px-2 py-2"
-            >
-              {t.nav.about}
-            </a>
-            <a
-              href="/project"
-              style={{ color: linkColor("/project") }}
-              className="px-2 py-2"
-            >
-              {t.nav.project}
-            </a>
-            <a
-              href="/contact"
-              style={{ color: linkColor("/contact") }}
-              className="px-2 py-2"
-            >
-              {t.nav.contact}
-            </a>
+      <nav
+        className={`fixed top-6 right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto w-auto rounded-full border z-50 transition-all duration-300 ${
+          isMobileMenuOpen
+            ? darkMode
+              ? "bg-black border-cyan-300/20"
+              : "bg-white"
+            : darkMode
+            ? "bg-black/30 border-cyan-300/20 shadow-[0_8px_30px_rgb(0,0,0,0.12),_0_0_12px_rgba(100,210,255,0.3)]"
+            : "bg-white"
+        }`}
+        style={
+          isMobileMenuOpen
+            ? {}
+            : { backdropFilter: "saturate(180%) blur(24px)" }
+        }
+      >
+        <div className="flex items-center px-4 h-14">
+          {/* Desktop Links & Controls */}
+          <div className="hidden md:flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Link href="/" className={linkClasses("/")}>
+                {t.nav.home}
+              </Link>
+              <Link href="/about" className={linkClasses("/about")}>
+                {t.nav.about}
+              </Link>
+              <Link href="/project" className={linkClasses("/project")}>
+                {t.nav.project}
+              </Link>
+              <a href="/contact" className={linkClasses("/contact")}>
+                {t.nav.contact}
+              </a>
+            </div>
+
+            {/* Controls */}
+            <div className="flex items-center gap-2 border-l border-slate-300/30 pl-4">
+              <button
+                onClick={() => setLanguage(language === "en" ? "zh" : "en")}
+                className={`p-2 rounded-full transition-all transform hover:-translate-y-0.5 hover:shadow-lg ${
+                  darkMode
+                    ? "text-slate-400 hover:bg-slate-800 hover:text-white"
+                    : "text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                }`}
+                aria-label="Toggle language"
+              >
+                <Globe className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={toggleDarkMode}
+                className={`p-2 rounded-full transition-all transform hover:-translate-y-0.5 hover:shadow-lg ${
+                  darkMode
+                    ? "text-slate-400 hover:bg-slate-800 hover:text-white"
+                    : "text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                }`}
+                aria-label="Toggle dark mode"
+              >
+                {darkMode ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
 
-          {/* Language Toggle */}
-          <button
-            onClick={() => setLanguage(language === "en" ? "zh" : "en")}
-            className="p-2 rounded-lg hover:opacity-70 transition"
-            aria-label="Toggle language"
-          >
-            <Globe
-              className="w-5 h-5"
-              style={{ color: isDark ? "#FCF0B6" : "#171717" }}
-            />
-          </button>
-
-          {/* Dark Mode Toggle */}
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-lg hover:opacity-70 transition"
-            aria-label="Toggle dark mode"
-          >
-            {isDark ? (
-              <Sun className="w-5 h-5" style={{ color: "#FCF0B6" }} />
-            ) : (
-              <Moon className="w-5 h-5" style={{ color: "#171717" }} />
-            )}
-          </button>
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className={`p-2 rounded-full transition-colors ${
+                darkMode
+                  ? "text-slate-400 hover:bg-slate-800 hover:text-white"
+                  : "text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+              }`}
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+
+        {/* Mobile Menu Panel */}
+        {isMobileMenuOpen && (
+          <div
+            className={`md:hidden absolute top-16 right-0 w-[90vw] max-w-sm rounded-xl border p-4 transition-all duration-300 ${
+              darkMode ? "bg-black border-cyan-300/20" : "bg-white"
+            }`}
+            style={
+              isMobileMenuOpen
+                ? {}
+                : { backdropFilter: "saturate(180%) blur(24px)" }
+            }
+          >
+            <div className="flex flex-col gap-2">
+              <Link href="/" className={linkClasses("/")}>
+                {t.nav.home}
+              </Link>
+              <Link href="/about" className={linkClasses("/about")}>
+                {t.nav.about}
+              </Link>
+              <Link href="/project" className={linkClasses("/project")}>
+                {t.nav.project}
+              </Link>
+              <a href="/contact" className={linkClasses("/contact")}>
+                {t.nav.contact}
+              </a>
+
+              <hr className="border-slate-300/30 my-2" />
+
+              <div className="flex  gap-2">
+                <button
+                  onClick={() => setLanguage(language === "en" ? "zh" : "en")}
+                  className={`p-2 rounded-full transition-all transform hover:-translate-y-0.5 hover:shadow-lg ${
+                    darkMode
+                      ? "text-slate-400 hover:bg-slate-800 hover:text-white"
+                      : "text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                  }`}
+                  aria-label="Toggle language"
+                >
+                  <Globe className="w-5 h-5" />
+                </button>
+
+                <button
+                  onClick={toggleDarkMode}
+                  className={`p-2 rounded-full transition-all transform hover:-translate-y-0.5 hover:shadow-lg ${
+                    darkMode
+                      ? "text-slate-400 hover:bg-slate-800 hover:text-white"
+                      : "text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                  }`}
+                  aria-label="Toggle dark mode"
+                >
+                  {darkMode ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
+    </>
   );
 }

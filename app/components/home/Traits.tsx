@@ -1,150 +1,125 @@
 "use client";
 
-import Image from "next/image";
-import { useLanguage } from "./LanguageProvider";
-import { useScrollReveal } from "@/app/hooks/useScrollReveal";
+import React from "react";
+import { motion } from "framer-motion";
+import DraggableSticker from "./DraggableSticker";
+import { useLanguage } from "../LanguageProvider";
 
 interface TraitsProps {
   darkMode: boolean;
 }
 
 export default function Traits({ darkMode }: TraitsProps) {
+  const constraintsRef = React.useRef<HTMLElement>(null);
   const { t } = useLanguage();
 
-  const traits = [
-    {
-      icon: darkMode
-        ? "/images/dark_mode/home/creative_dark.svg"
-        : "/images/light_mode/home/creative.svg",
-      textbox: darkMode
-        ? "/images/dark_mode/home/textbox_dark.png"
-        : "/images/light_mode/home/textbox.png",
-      title: t.traits.creative.title,
-      description: t.traits.creative.desc,
-      animation: "slide-in-left",
-    },
-    {
-      icon: darkMode
-        ? "/images/dark_mode/home/Problem-Solver_dark.svg"
-        : "/images/light_mode/home/Problem-Solver.svg",
-      textbox: darkMode
-        ? "/images/dark_mode/home/textbox_dark.png"
-        : "/images/light_mode/home/textbox2.png",
-      title: t.traits.problemSolver.title,
-      description: t.traits.problemSolver.desc,
-      animation: "slide-in-right",
-    },
-    {
-      icon: darkMode
-        ? "/images/dark_mode/home/Team-Player_dark.svg"
-        : "/images/light_mode/home/Team-Player.svg",
-      textbox: darkMode
-        ? "/images/dark_mode/home/textbox_dark.png"
-        : "/images/light_mode/home/textbox.png",
-      title: t.traits.teamPlayer.title,
-      description: t.traits.teamPlayer.desc,
-      animation: "slide-in-left",
-    },
-    {
-      icon: darkMode
-        ? "/images/dark_mode/home/Adaptable_dark.svg"
-        : "/images/light_mode/home/Adaptable.svg",
-      textbox: darkMode
-        ? "/images/dark_mode/home/textbox_dark.png"
-        : "/images/light_mode/home/textbox2.png",
-      title: t.traits.adaptable.title,
-      description: t.traits.adaptable.desc,
-      animation: "slide-in-right",
-    },
-  ];
+  // 👉 从 translations 拿 traits
+  const traits = t.traits.list;
 
   return (
     <section
-      id="about"
-      className="min-h-screen flex items-center py-20 px-6 relative"
+      ref={constraintsRef}
+      className={`h-screen w-full flex items-center px-6 sm:px-8 relative transition-all duration-700 ${
+        darkMode ? "bg-zinc-900" : "bg-[#f0f4f3]"
+      }`}
     >
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid md:grid-cols-2 gap-12">
-          {traits.map((trait, index) => {
-            const TraitItem = () => {
-              const { elementRef, isVisible } = useScrollReveal();
+      {/* ================= Stickers ================= */}
+      <DraggableSticker
+        src="/images/sticker/sticker-1.png"
+        alt="Sticker 1"
+        size={120}
+        initial={{ top: 40, right: 40 }}
+        darkMode={darkMode}
+        constraintsRef={constraintsRef}
+      />
 
-              return (
+      <div className="max-w-5xl mx-auto w-full">
+        {/* ================= Traits Grid ================= */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-16 sm:gap-y-20">
+          {traits.map((trait: any, index: number) => (
+            <motion.div
+              key={trait.key}
+              className="group relative"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.08,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
+              viewport={{ once: false, amount: 0.4 }}
+            >
+              {/* ================= Title ================= */}
+              <h3
+                className={`text-sm font-semibold tracking-[0.15em] mb-3 transition-colors duration-300 ${
+                  darkMode
+                    ? "text-zinc-400 group-hover:text-white"
+                    : "text-zinc-600 group-hover:text-zinc-900"
+                }`}
+                style={{
+                  fontFamily:
+                    "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                  letterSpacing: "0.15em",
+                }}
+              >
+                {trait.title}
+              </h3>
+
+              {/* ================= Underline ================= */}
+              <div className="relative mb-4">
                 <div
-                  ref={elementRef}
-                  className={`flex gap-6 items-start ${
-                    isVisible ? trait.animation : ""
+                  className={`h-px transition-all duration-300 ${
+                    darkMode ? "bg-zinc-700" : "bg-zinc-300"
                   }`}
-                  style={{ animationDelay: `${index * 0.15}s` }}
-                >
-                  {/* Icon / Sticker with rotate animation */}
-                  <div className="w-[117px] h-[125px] flex-shrink-0 rotate-in hover-glow">
-                    <Image
-                      src={trait.icon}
-                      alt={trait.title}
-                      width={117}
-                      height={125}
-                      className="w-full h-full object-contain transition-transform duration-300 hover:scale-110"
-                    />
-                  </div>
+                />
+                <motion.div
+                  className={`absolute top-0 left-0 h-px ${
+                    darkMode ? "bg-white" : "bg-zinc-900"
+                  }`}
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{
+                    duration: 0.4,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                />
+              </div>
 
-                  {/* Content */}
-                  <div className="flex-1">
-                    <h3
-                      className="font-bold mb-3 hover:scale-105 transition-transform duration-300"
-                      style={{
-                        color: darkMode ? "#FCF0B6" : "#171717",
-                        fontSize: "32px",
-                      }}
-                    >
-                      {trait.title}
-                    </h3>
-
-                    {/* Textbox with Description */}
-                    <div className="relative hover:scale-105 transition-transform duration-300">
-                      {/* Textbox Background PNG */}
-                      <Image
-                        src={trait.textbox}
-                        alt=""
-                        width={400}
-                        height={150}
-                        className="w-full h-auto"
-                      />
-
-                      {/* Description Text Overlay */}
-                      <p
-                        className="absolute inset-0 flex items-center justify-center px-8 py-4 text-center"
-                        style={{
-                          color: darkMode ? "#F7C9C8" : "#171717",
-                          fontFamily: "'Indie Flower', cursive",
-                          fontSize: "24px",
-                        }}
-                      >
-                        {trait.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            };
-
-            return <TraitItem key={index} />;
-          })}
+              {/* ================= Subtitle ================= */}
+              <motion.p
+                className={`text-base leading-relaxed transition-all duration-400 ${
+                  darkMode ? "text-zinc-500" : "text-zinc-600"
+                }`}
+                style={{
+                  fontFamily:
+                    "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                  letterSpacing: "-0.01em",
+                  fontWeight: 400,
+                }}
+                initial={{ opacity: 0, y: 4 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.08 + 0.3,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
+                viewport={{ once: false }}
+              >
+                “{trait.subtitle}”
+              </motion.p>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      {/* Section Divider */}
-      <div className="absolute bottom-0 left-0 w-full">
-        <Image
-          src={
-            darkMode ? "/images/divider_dark.svg" : "/images/divider_light.svg"
-          }
-          alt="Section Divider"
-          width={1920}
-          height={80}
-          className="w-full h-auto"
-        />
-      </div>
+      <DraggableSticker
+        src="/images/sticker/sticker-2.png"
+        alt="Sticker 2"
+        size={100}
+        initial={{ bottom: 40, left: 40 }}
+        darkMode={darkMode}
+        constraintsRef={constraintsRef}
+      />
     </section>
   );
 }

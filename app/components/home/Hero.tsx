@@ -1,244 +1,221 @@
+/* app/components/home/Hero.tsx */
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { useLanguage } from "./LanguageProvider";
-import { useEffect, useState } from "react";
+import { useLanguage } from "../LanguageProvider";
+import { useEffect } from "react";
+import { motion, useAnimation, Variants } from "framer-motion";
+import {
+  RippleButton,
+  RippleButtonRipples,
+} from "@/components/animate-ui/components/buttons/ripple";
 
 interface HeroProps {
   darkMode: boolean;
+  startAnimation: boolean;
 }
 
-export default function Hero({ darkMode }: HeroProps) {
+export default function Hero({ darkMode, startAnimation }: HeroProps) {
   const { t } = useLanguage();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const controls = useAnimation();
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
-    };
+    if (startAnimation) {
+      controls.start("visible");
+    }
+  }, [startAnimation, controls]);
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        duration: 0.6,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { y: 12, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "tween",
+        duration: 0.9,
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    },
+  };
+
+  const portraits = [
+    { src: "/images/portraits-1.png", rotate: -8, scale: 0.95, delay: 0 },
+    { src: "/images/portraits-2.png", rotate: 4, scale: 1, delay: 0.1 },
+    { src: "/images/portraits-3.png", rotate: -6, scale: 0.98, delay: 0.2 },
+    { src: "/images/portraits-4.png", rotate: 2, scale: 1.02, delay: 0.3 },
+    { src: "/images/portraits-5.png", rotate: 5, scale: 0.96, delay: 0.4 },
+    { src: "/images/portraits-6.png", rotate: 5, scale: 0.96, delay: 0.4 },
+  ];
 
   return (
     <section
-      id="home"
-      className="min-h-screen flex items-center px-6 relative overflow-hidden"
+      className={`h-screen w-full flex items-center justify-center px-6 relative overflow-hidden transition-all duration-700 ${
+        darkMode ? "bg-zinc-950" : "bg-[#215245]"
+      }`}
     >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Floating circles */}
-        <div
-          className="absolute w-64 h-64 rounded-full opacity-20 animate-float"
-          style={{
-            background: darkMode
-              ? "radial-gradient(circle, #CEFECE 0%, transparent 70%)"
-              : "radial-gradient(circle, #585bb7ff 0%, transparent 70%)",
-            top: "10%",
-            left: "5%",
-            transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-          }}
-        />
-        <div
-          className="absolute w-96 h-96 rounded-full opacity-10 animate-float-delayed"
-          style={{
-            background: darkMode
-              ? "radial-gradient(circle, #FCF0B6 0%, transparent 70%)"
-              : "radial-gradient(circle, #AC7F5E 0%, transparent 70%)",
-            bottom: "10%",
-            right: "5%",
-            transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-          }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Left: Text */}
-          <div className="slide-in-left" style={{ animationDelay: "0.2s" }}>
+      <div className="max-w-6xl mx-auto w-full relative z-10 flex flex-col justify-center h-full">
+        {/* ================== TEXT CONTENT ================== */}
+        <motion.div
+          className="flex flex-col items-center text-center space-y-8 pb-32"
+          variants={containerVariants}
+          initial="hidden"
+          animate={controls}
+        >
+          <motion.div variants={itemVariants} className="space-y-3">
             <h1
-              className="text-5xl md:text-6xl font-bold mb-6"
-              style={{ color: darkMode ? "#CEFECE" : "#171717" }}
+              className={`text-6xl sm:text-7xl md:text-5xl font-light tracking-tight leading-[0.95] transition-colors duration-700 ${
+                darkMode ? "text-white" : "text-[#e8f5f2]"
+              }`}
+              style={{
+                fontFamily:
+                  "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                letterSpacing: "-0.03em",
+              }}
             >
-              {t.hero.greeting}{" "}
-              <span className="gradient-text inline-block">{t.hero.name}</span>
+              {t.hero.greeting}
             </h1>
 
-            <p
-              className="text-lg mb-8 leading-relaxed"
+            <h2
+              className={`text-6xl sm:text-7xl md:text-8xl font-medium tracking-tight leading-[0.95] transition-colors duration-700 ${
+                darkMode ? "text-zinc-400" : "text-[#a8d5c9]"
+              }`}
               style={{
-                color: darkMode ? "#F7C9C8" : "#171717",
-                animationDelay: "0.4s",
+                fontFamily:
+                  "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                letterSpacing: "-0.03em",
               }}
             >
-              {t.hero.description}
-            </p>
+              {t.hero.name}
+            </h2>
+          </motion.div>
 
-            <div className="flex gap-4">
-              {/* Button 1 */}
+          <motion.p
+            variants={itemVariants}
+            className={`text-lg md:text-xl leading-relaxed max-w-xl transition-colors duration-700 ${
+              darkMode ? "text-zinc-500" : "text-[#c5e4db]"
+            }`}
+          >
+            {t.hero.description}
+          </motion.p>
 
-              <a
-                href="#project"
-                className="px-8 py-3 rounded-lg font-medium shadow-md transition-all duration-300 hover-glow"
-                style={{
-                  backgroundColor: darkMode
-                    ? "#F7C9C8"
-                    : "rgba(99,127,156,0.43)",
-                  border: `2px solid ${darkMode ? "#F7C9C8" : "#637F9C"}`,
-                  color: darkMode ? "#000000" : "#2C4C72",
-                  animationDelay: "0.6s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = darkMode
-                    ? "#FFD8D7"
-                    : "#7799BB";
-                  e.currentTarget.style.transform = "scale(1.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = darkMode
-                    ? "#F7C9C8"
-                    : "rgba(99,127,156,0.43)";
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4 pt-4"
+          >
+            <Link href="/project" passHref>
+              <RippleButton
+                className={`relative overflow-hidden px-9 py-3.5 font-medium transition-all duration-300 hover:scale-[1.02] ${
+                  darkMode
+                    ? "bg-[#262626] ring-1 ring-white/20 text-white hover:bg-white/5"
+                    : "bg-white ring-1 ring-[#ffffff]/30 text-[#000000] hover:bg-white/10 hover:text-white"
+                }`}
+                style={
+                  {
+                    "--ripple-button-ripple-color": darkMode
+                      ? "rgba(0,0,0,0.1)"
+                      : "rgba(0,0,0,0.1)",
+                  } as React.CSSProperties
+                }
               >
                 {t.hero.viewProject}
-              </a>
+                <RippleButtonRipples />
+              </RippleButton>
+            </Link>
 
-              {/* Button 2 */}
-
-              <a
-                href="#about"
-                className="px-8 py-3 rounded-lg font-medium shadow-md transition-all duration-300 hover-glow"
-                style={{
-                  backgroundColor: darkMode
-                    ? "#00C8B3"
-                    : "rgba(172,127,94,0.43)",
-                  border: `2px solid ${darkMode ? "#00C8B3" : "#AC7F5E"}`,
-                  color: darkMode ? "#000000" : "#823E20",
-                  animationDelay: "0.7s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = darkMode
-                    ? "#2AF3DE"
-                    : "rgba(172,127,94,0.8)";
-                  e.currentTarget.style.transform = "scale(1.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = darkMode
-                    ? "#00C8B3"
-                    : "rgba(172,127,94,0.43)";
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
+            <Link href="/about" passHref>
+              <RippleButton
+                className={`relative overflow-hidden px-9 py-3.5 font-medium transition-all duration-300 hover:scale-[1.02] ${
+                  darkMode
+                    ? "bg-[#262626] ring-1 ring-white/20 text-white hover:bg-white/5"
+                    : "ring-1 ring-[#e8f5f2]/30 text-[#e8f5f2] hover:bg-white/10"
+                }`}
+                style={
+                  {
+                    "--ripple-button-ripple-color": darkMode
+                      ? "rgba(255,255,255,0.1)"
+                      : "rgba(255,255,255,0.2)",
+                  } as React.CSSProperties
+                }
               >
                 {t.hero.aboutMe}
-              </a>
-            </div>
-          </div>
+                <RippleButtonRipples />
+              </RippleButton>
+            </Link>
+          </motion.div>
+        </motion.div>
 
-          {/* Right: Profile with Rotating PNG Border */}
-          <div
-            className="flex justify-center relative scale-in"
-            style={{ animationDelay: "0.3s" }}
-          >
-            <div
-              className="relative w-80 h-80 parallax"
-              style={{
-                transform: `translate(${mousePosition.x * 0.5}px, ${
-                  mousePosition.y * 0.5
-                }px)`,
+        {/* ================== PORTRAITS ================== */}
+        <motion.div
+          className="
+            absolute bottom-30 left-1/2 -translate-x-1/2
+            flex items-center justify-center
+            gap-3 sm:gap-6 md:gap-8
+          "
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.6 }}
+        >
+          {portraits.map((portrait, index) => (
+            <motion.div
+              key={index}
+              className={`
+                relative flex-shrink-0
+                w-[80px] h-[80px]
+                sm:w-[130px] sm:h-[130px]
+                md:w-[110px] md:h-[110px]
+                lg:w-[150px] lg:h-[150px]
+
+                ${index > 3 ? "hidden sm:block" : ""}
+                ${index > 4 ? "hidden md:block" : ""}
+              `}
+              initial={{ opacity: 0, y: 20, rotate: 0 }}
+              animate={{ opacity: 1, y: 0, rotate: portrait.rotate }}
+              transition={{
+                duration: 0.8,
+                delay: portrait.delay + 0.8,
               }}
+              whileHover={{
+                y: -8,
+                rotate: portrait.rotate + (portrait.rotate > 0 ? 2 : -2),
+              }}
+              style={{ transform: `scale(${portrait.scale})` }}
             >
-              {/* Rotating PNG Border (dash = 22) */}
-              <div className="absolute inset-0 rotating-border">
-                <Image
-                  src={
-                    darkMode
-                      ? "/images/dark_mode/home/dash_dark.png"
-                      : "/images/light_mode/home/dash.png"
-                  }
-                  alt=""
-                  width={320}
-                  height={320}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              {/* Glow effect behind profile */}
-              <div
-                className="absolute inset-0 rounded-full opacity-30 blur-3xl"
-                style={{
-                  background: darkMode
-                    ? "radial-gradient(circle, #FCF0B6 0%, transparent 70%)"
-                    : "radial-gradient(circle, #637F9C 0%, transparent 70%)",
-                  animation: "pulse 3s ease-in-out infinite",
-                }}
+              <Image
+                src={portrait.src}
+                alt={`Portrait ${index + 1}`}
+                fill
+                sizes="(max-width: 640px) 110px,
+                       (max-width: 768px) 130px,
+                       150px"
+                className="rounded-xl object-cover"
               />
-
-              {/* Profile Image (Not rotating) - Centered */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[280px] h-[280px] rounded-full overflow-hidden shadow-2xl">
-                  <Image
-                    src={
-                      darkMode ? "/images/profile.png" : "/images/profile.png"
-                    }
-                    alt="Chai Hui Yi"
-                    width={280}
-                    height={280}
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                    priority
-                  />
-                </div>
-              </div>
-
-              {/* Bubble Stickers */}
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute -right-4 top-80 w-24 h-24 animate-float">
-                  <Image
-                    src="/images/light_mode/home/Bubble1.svg"
-                    alt=""
-                    width={130}
-                    height={96}
-                    className="w-full h-full"
-                  />
-                </div>
-                <div className="absolute -right-1 top-105 w-16 h-16 animate-float-delayed">
-                  <Image
-                    src="/images/light_mode/home/Bubble3.svg"
-                    alt=""
-                    width={80}
-                    height={80}
-                    className="w-full h-full"
-                  />
-                </div>
-                <div className="absolute right-19 top-100 s w-20 h-20 animate-float">
-                  <Image
-                    src="/images/light_mode/home/Bubble2.svg"
-                    alt=""
-                    width={64}
-                    height={64}
-                    className="w-full h-full"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Divider SVG */}
-      <div className="absolute bottom-0 left-0 w-full">
+      {/* ================== DIVIDER ================== */}
+      <div className="absolute bottom-0 left-0 w-full opacity-30">
         <Image
           src={
             darkMode ? "/images/divider_dark.svg" : "/images/divider_light.svg"
           }
-          alt="Hero Divider"
+          alt="Divider"
           width={1920}
           height={80}
-          className="w-full h-auto"
+          className=" w-full h-auto"
         />
       </div>
     </section>

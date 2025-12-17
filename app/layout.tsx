@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { LanguageProvider } from "@/app/components/home/LanguageProvider";
+import { LanguageProvider } from "@/app/components/LanguageProvider";
+import { DarkModeProvider } from "@/app/components/DarkModeProvider";
 import CursorLight from "@/app/components/home/CursorLight";
 
 export const metadata: Metadata = {
@@ -16,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <LanguageProvider>
-          <CursorLight />
-          {children}
-        </LanguageProvider>
+        <DarkModeProvider>
+          <LanguageProvider>
+            <CursorLight />
+            {children}
+          </LanguageProvider>
+        </DarkModeProvider>
       </body>
     </html>
   );

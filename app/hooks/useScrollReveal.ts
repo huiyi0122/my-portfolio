@@ -5,13 +5,26 @@ import { useEffect, useRef, useState } from "react";
 export function useScrollReveal() {
   const elementRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    // If already animated, don't observe again
+    if (hasAnimatedRef.current) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !hasAnimatedRef.current) {
             setIsVisible(true);
+            hasAnimatedRef.current = true;
+            // Stop observing after animation triggers
+            observer.unobserve(element);
           }
         });
       },
@@ -21,14 +34,10 @@ export function useScrollReveal() {
       }
     );
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
+    observer.observe(element);
 
     return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current);
-      }
+      observer.disconnect();
     };
   }, []);
 
