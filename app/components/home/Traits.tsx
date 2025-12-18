@@ -16,10 +16,23 @@ export default function Traits({ darkMode }: TraitsProps) {
   // 👉 从 translations 拿 traits
   const traits = t.traits.list;
 
+  // 获取 window 宽度做响应式
+  const [windowWidth, setWindowWidth] = React.useState(0);
+  React.useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Sticker 尺寸根据屏幕宽度
+  const sticker1Size = windowWidth < 640 ? 60 : 100;
+  const sticker2Size = windowWidth < 640 ? 50 : 100;
+
   return (
     <section
       ref={constraintsRef}
-      className={`h-screen w-full flex items-center px-6 sm:px-8 relative transition-all duration-700 ${
+      className={`h-screen w-full flex items-center px-4 sm:px-8 relative transition-all duration-700 ${
         darkMode ? "bg-zinc-900" : "bg-[#f0f4f3]"
       }`}
     >
@@ -27,15 +40,15 @@ export default function Traits({ darkMode }: TraitsProps) {
       <DraggableSticker
         src="/images/sticker/sticker-1.png"
         alt="Sticker 1"
-        size={120}
-        initial={{ top: 40, right: 40 }}
+        size={sticker1Size}
+        initial={{ top: 50, right: 30 }}
         darkMode={darkMode}
         constraintsRef={constraintsRef}
       />
 
       <div className="max-w-5xl mx-auto w-full">
         {/* ================= Traits Grid ================= */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-16 sm:gap-y-20">
+        <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-x-16 sm:gap-y-20">
           {traits.map((trait: any, index: number) => (
             <motion.div
               key={trait.key}
@@ -51,7 +64,9 @@ export default function Traits({ darkMode }: TraitsProps) {
             >
               {/* ================= Title ================= */}
               <h3
-                className={`text-sm font-semibold tracking-[0.15em] mb-3 transition-colors duration-300 ${
+                className={`${
+                  windowWidth < 640 ? "text-xs" : "text-sm"
+                } font-semibold tracking-[0.15em] mb-2 transition-colors duration-300 ${
                   darkMode
                     ? "text-zinc-400 group-hover:text-white"
                     : "text-zinc-600 group-hover:text-zinc-900"
@@ -66,7 +81,7 @@ export default function Traits({ darkMode }: TraitsProps) {
               </h3>
 
               {/* ================= Underline ================= */}
-              <div className="relative mb-4">
+              <div className="relative mb-2">
                 <div
                   className={`h-px transition-all duration-300 ${
                     darkMode ? "bg-zinc-700" : "bg-zinc-300"
@@ -87,7 +102,9 @@ export default function Traits({ darkMode }: TraitsProps) {
 
               {/* ================= Subtitle ================= */}
               <motion.p
-                className={`text-base leading-relaxed transition-all duration-400 ${
+                className={`${
+                  windowWidth < 640 ? "text-xs" : "text-sm"
+                } leading-relaxed transition-all duration-400 ${
                   darkMode ? "text-zinc-500" : "text-zinc-600"
                 }`}
                 style={{
@@ -115,7 +132,7 @@ export default function Traits({ darkMode }: TraitsProps) {
       <DraggableSticker
         src="/images/sticker/sticker-2.png"
         alt="Sticker 2"
-        size={100}
+        size={sticker2Size}
         initial={{ bottom: 40, left: 40 }}
         darkMode={darkMode}
         constraintsRef={constraintsRef}

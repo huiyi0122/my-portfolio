@@ -108,9 +108,12 @@ export default function FullPageScroll({
   }, [currentSection, isScrolling, sections.length]);
 
   return (
-    <div className="fixed inset-0 overflow-hidden">
+    <div
+      className="fixed inset-0 overflow-hidden"
+      style={{ touchAction: "none" }}
+    >
       {/* Navigation dots with avatar for current section */}
-      <div className="fixed right-6 sm:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col">
+      <div className="fixed right-1 sm:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col">
         {sections.map((_, index) => (
           <button
             key={index}
@@ -127,7 +130,7 @@ export default function FullPageScroll({
             {currentSection === index ? (
               // Current section: Show avatar
               <div
-                className={`w-8 h-8 rounded-full overflow-hidden transition-all duration-500 ease-out ring-2 scale-110 ${
+                className={`w-5 h-5 sm:w-8 sm:h-8 rounded-full overflow-hidden transition-all duration-500 ease-out ring-2 scale-110 ${
                   darkMode ? "ring-white shadow-lg" : "ring-zinc-900 shadow-lg"
                 }`}
               >
@@ -152,8 +155,7 @@ export default function FullPageScroll({
           </button>
         ))}
       </div>
-
-      {/* Sections container with refined easing */}
+      {/* Sections container with refined easing */}{" "}
       <motion.div
         animate={{ y: `-${currentSection * 100}vh` }}
         transition={{

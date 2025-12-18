@@ -16,7 +16,7 @@ export default function CurrentFocus({ darkMode }: CurrentFocusProps) {
   return (
     <section
       ref={constraintsRef}
-      className={`h-screen w-full flex items-center px-6 relative overflow-hidden transition-all duration-700 ${
+      className={`h-screen w-full flex items-center px-4 sm:px-6 relative overflow-hidden transition-all duration-700 ${
         darkMode ? "bg-zinc-900" : "bg-[#f5f3f0]"
       }`}
     >
@@ -24,8 +24,9 @@ export default function CurrentFocus({ darkMode }: CurrentFocusProps) {
       <DraggableSticker
         src="/images/sticker/sticker-6.png"
         alt="Sticker"
-        size={100}
-        initial={{ bottom: 140, right: 240 }}
+        size={120}
+        sizeMobile={80}
+        initial={{ bottom: 50, right: 200 }}
         darkMode={darkMode}
         constraintsRef={constraintsRef}
       />
@@ -39,7 +40,7 @@ export default function CurrentFocus({ darkMode }: CurrentFocusProps) {
       >
         {/* Section Label */}
         <motion.p
-          className={`text-xs font-semibold tracking-[0.2em] uppercase text-center mb-12 transition-colors duration-700 ${
+          className={`text-xs sm:text-xs font-semibold tracking-[0.2em] uppercase text-center mb-12 transition-colors duration-700 ${
             darkMode ? "text-zinc-500" : "text-zinc-500"
           }`}
           initial={{ opacity: 0 }}
@@ -56,7 +57,7 @@ export default function CurrentFocus({ darkMode }: CurrentFocusProps) {
 
         {/* Title */}
         <motion.h2
-          className={`text-4xl md:text-5xl font-light text-center mb-16 tracking-tight transition-colors duration-700 ${
+          className={`text-3xl sm:text-4xl md:text-5xl font-light text-center mb-12 md:mb-16 tracking-tight transition-colors duration-700 ${
             darkMode ? "text-white" : "text-zinc-900"
           }`}
           initial={{ opacity: 0, y: 15 }}
@@ -75,7 +76,7 @@ export default function CurrentFocus({ darkMode }: CurrentFocusProps) {
 
         {/* Focus Tags */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-4 max-w-3xl mx-auto"
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 max-w-3xl mx-auto"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -84,7 +85,7 @@ export default function CurrentFocus({ darkMode }: CurrentFocusProps) {
           {t.about.focus.principles.map((focus: string, index: number) => (
             <motion.div
               key={focus}
-              className={`px-6 py-3 rounded-full text-base font-medium transition-all duration-300 ${
+              className={`px-3 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 ${
                 darkMode
                   ? "bg-zinc-800/50 text-zinc-300 ring-1 ring-white/10 hover:bg-zinc-800"
                   : "bg-white/60 text-zinc-700 ring-1 ring-zinc-900/5 hover:bg-white"

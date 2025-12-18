@@ -1,13 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import React from "react";
 import Image from "next/image";
 
 interface DraggableStickerProps {
   src: string;
   alt: string;
   size: number;
+  sizeMobile?: number;
+  sizeTablet?: number;
   initial?: { top?: number; bottom?: number; left?: number; right?: number };
+  className?: string;
   darkMode: boolean;
   constraintsRef?: React.RefObject<HTMLElement | null>;
 }
@@ -16,14 +20,36 @@ const DraggableSticker: React.FC<DraggableStickerProps> = ({
   src,
   alt,
   size,
+  sizeMobile,
+  sizeTablet,
   initial,
+  className = "",
   darkMode,
   constraintsRef,
 }) => {
+  const [currentSize, setCurrentSize] = React.useState(size);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 640 && sizeMobile) {
+        setCurrentSize(sizeMobile);
+      } else if (width < 1024 && sizeTablet) {
+        setCurrentSize(sizeTablet);
+      } else {
+        setCurrentSize(size);
+      }
+    };
+
+    handleResize(); // Set initial size
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [size, sizeMobile, sizeTablet]);
+
   return (
     <motion.div
-      className="absolute cursor-grab"
-      style={{ width: size, height: size, ...initial, zIndex: 5 }}
+      className={`absolute cursor-grab ${className}`}
+      style={{ width: currentSize, height: currentSize, ...initial, zIndex: 5 }}
       drag
       dragConstraints={constraintsRef}
       whileHover={{ scale: 1.1, zIndex: 6 }}

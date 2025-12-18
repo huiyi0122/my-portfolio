@@ -135,7 +135,7 @@ export default function ContactPage() {
       </header>
 
       {/* Main Content */}
-      <main className="relative flex items-center justify-center pt-32 pb-16 px-4 min-h-screen">
+      <main className="relative flex items-center justify-center pt-20 pb-16 px-4 min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

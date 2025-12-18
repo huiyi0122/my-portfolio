@@ -32,7 +32,7 @@ export default function Navbar() {
     const baseClasses = `transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center`;
 
     const textClasses = "px-3 py-2 rounded-full text-sm font-medium";
-    const iconClasses = "p-2.5 rounded-full";
+    const iconClasses = "p-2 rounded-full";
 
     const activeDark = "bg-slate-800 text-cyan-300";
     const inactiveDark = "text-slate-300 hover:bg-slate-800 hover:text-white";
@@ -55,25 +55,26 @@ export default function Navbar() {
   return (
     <>
       {/* Logo - Top Left */}
-      <Link href="/" className="fixed top-6 left-6 z-50">
+      <Link href="/" className="fixed top-4 left-4 md:top-6 md:left-6 z-50">
         <Image
           src={darkMode ? "/images/LOGO-2.png" : "/images/LOGO-2.png"}
           alt="CHY"
-          width={60}
-          height={60}
-          className="h-15 w-auto cursor-pointer transition-all duration-300 hover:opacity-80 hover:drop-shadow-[0_0_8px_rgba(100,210,255,0.5)]"
+          width={48}
+          height={48}
+          className="w-10 h-10 md:w-15 md:h-15 cursor-pointer transition-all duration-300 hover:opacity-80 hover:drop-shadow-[0_0_8px_rgba(100,210,255,0.5)]"
         />
       </Link>
 
+      {/* Navbar */}
       <nav
-        className={`fixed bottom-6 left-1/2 -translate-x-1/2 md:bottom-auto md:top-6 w-auto rounded-full border z-50 transition-all duration-300 ${
+        className={`fixed bottom-4 left-1/2 -translate-x-1/2 md:bottom-auto md:top-6 w-auto rounded-full border z-50 transition-all duration-300 ${
           darkMode
             ? "bg-black/30 border-cyan-300/20 shadow-[0_8px_30px_rgb(0,0,0,0.12),_0_0_12px_rgba(100,210,255,0.3)]"
             : "bg-white/80 border-slate-200 shadow-sm"
         }`}
         style={{ backdropFilter: "saturate(180%) blur(24px)" }}
       >
-        <div className="flex items-center px-4 h-14">
+        <div className="flex items-center px-2 md:px-4 h-10 md:h-14">
           {/* Desktop Links & Controls */}
           <div className="hidden md:flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -121,7 +122,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Icons & Controls */}
-          <div className="flex md:hidden items-center gap-1">
+          <div className="flex md:hidden items-center gap-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -131,30 +132,39 @@ export default function Navbar() {
                   className={linkClasses(item.href, true)}
                   aria-label={item.label}
                 >
-                  <Icon size={20} />
+                  <Icon size={15} /> {/* 移动端图标小一点 */}
                 </Link>
               );
             })}
-            {/* Mobile Controls */}
-            <div className="flex items-center gap-1 border-l border-slate-300/30 ml-2 pl-2">
-              <button
-                onClick={() => setLanguage(language === "en" ? "zh" : "en")}
-                className={linkClasses("", true)}
-                aria-label="Toggle language"
-              >
-                <Globe size={20} />
-              </button>
-              <button
-                onClick={toggleDarkMode}
-                className={linkClasses("", true)}
-                aria-label="Toggle dark mode"
-              >
-                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-            </div>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Controls - Top Right */}
+      <div className="md:hidden fixed top-4 right-4 z-50 flex items-center gap-2">
+        <button
+          onClick={() => setLanguage(language === "en" ? "zh" : "en")}
+          className={`p-2 rounded-full transition-all ${
+            darkMode
+              ? "text-slate-400 bg-black/30 hover:bg-slate-800 hover:text-white"
+              : "text-slate-600 bg-white/80 hover:bg-slate-200 hover:text-slate-900"
+          }`}
+          aria-label="Toggle language"
+        >
+          <Globe size={15} />
+        </button>
+        <button
+          onClick={toggleDarkMode}
+          className={`p-2 rounded-full transition-all ${
+            darkMode
+              ? "text-slate-400 bg-black/30 hover:bg-slate-800 hover:text-white"
+              : "text-slate-600 bg-white/80 hover:bg-slate-200 hover:text-slate-900"
+          }`}
+          aria-label="Toggle dark mode"
+        >
+          {darkMode ? <Sun size={15} /> : <Moon size={15} />}
+        </button>
+      </div>
     </>
   );
 }

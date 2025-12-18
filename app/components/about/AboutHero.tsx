@@ -1,4 +1,3 @@
-/*C:\Users\user\my-portfolio\app\components\about\AboutHero.tsx*/
 "use client";
 
 import Image from "next/image";
@@ -33,22 +32,22 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
 
   return (
     <section
-      className={`h-screen w-full flex items-center px-6 relative overflow-hidden transition-all duration-700 ${
+      className={`h-screen w-full flex items-center px-4 sm:px-6 md:px-6 relative overflow-hidden transition-all duration-700 ${
         darkMode ? "bg-zinc-950" : "bg-[#faf9f7]"
       }`}
     >
-      <div className="max-w-6xl mx-auto w-full">
+      <div className="max-w-6xl mx-auto w-full pt-20 md:pt-0">
         <motion.div
-          className="grid md:grid-cols-[1fr_1fr] gap-16 items-center"
+          className="grid md:grid-cols-[1fr_1fr] gap-8 sm:gap-16 items-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
         >
           {/* Left: Text Content */}
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* Subtitle */}
             <motion.p
-              className={`text-xs font-semibold tracking-[0.2em] uppercase transition-colors duration-700 ${
+              className={`text-xs sm:text-xs font-semibold tracking-[0.2em] uppercase transition-colors duration-700 ${
                 darkMode ? "text-zinc-500" : "text-zinc-500"
               }`}
               initial={{ opacity: 0, y: 10 }}
@@ -64,7 +63,7 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
 
             {/* Name */}
             <motion.h1
-              className={`text-6xl md:text-7xl font-light tracking-tight transition-colors duration-700 ${
+              className={`text-3xl sm:text-5xl md:text-7xl font-light tracking-tight transition-colors duration-700 ${
                 darkMode ? "text-white" : "text-zinc-900"
               }`}
               initial={{ opacity: 0, y: 15 }}
@@ -82,7 +81,7 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
 
             {/* Social Links */}
             <motion.div
-              className="flex items-center gap-4 pt-4"
+              className="flex items-center gap-3 sm:gap-4 pt-2 sm:pt-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
@@ -90,7 +89,7 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
               <motion.a
                 href="mailto:huiyicai27@gmail.com"
                 aria-label="Email"
-                className={`flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 ${
+                className={`flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-full transition-all duration-300 ${
                   darkMode
                     ? "bg-zinc-900/50 text-zinc-400 hover:bg-zinc-800 hover:text-white ring-1 ring-white/10"
                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 hover:text-zinc-900"
@@ -98,7 +97,7 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
                 whileHover={{ y: -2, scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <Mail size={20} strokeWidth={1.5} />
+                <Mail size={16} className="sm:!w-5 sm:!h-5" strokeWidth={1.5} />
               </motion.a>
 
               <motion.a
@@ -106,7 +105,7 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className={`flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 ${
+                className={`flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-full transition-all duration-300 ${
                   darkMode
                     ? "bg-zinc-900/50 text-zinc-400 hover:bg-zinc-800 hover:text-white ring-1 ring-white/10"
                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 hover:text-zinc-900"
@@ -114,14 +113,18 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
                 whileHover={{ y: -2, scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <Github size={20} strokeWidth={1.5} />
+                <Github
+                  size={16}
+                  className="sm:!w-5 sm:!h-5"
+                  strokeWidth={1.5}
+                />
               </motion.a>
             </motion.div>
           </div>
 
           {/* Right: Profile Images */}
-          <div className="flex items-center justify-center min-h-[250px] md:min-h-0">
-            <div className="relative w-44 h-44 flex items-center justify-center">
+          <div className="flex items-center justify-center min-h-[180px] sm:min-h-[250px] md:min-h-0">
+            <div className="relative w-32 h-32 sm:w-44 sm:h-44 flex items-center justify-center">
               {images.map((image, index) => (
                 <motion.div
                   key={index}
@@ -136,13 +139,11 @@ export default function AboutHero({ darkMode }: AboutHeroProps) {
                     zIndex: 50,
                   }}
                   whileDrag={{ zIndex: 100 }}
-                  className={`absolute w-36 h-36 sm:w-44 sm:h-44 cursor-grab rounded-2xl ${
-                    index === 1 ? "z-20" : "z-10"
-                  }`}
+                  className={`absolute rounded-2xl cursor-grab w-28 h-28 sm:w-44 sm:h-44`}
                   style={{
                     rotate: image.rotation,
-                    left:
-                      index === 0 ? "-100px" : index === 2 ? "100px" : "0px",
+                    left: index === 0 ? "-5rem" : index === 2 ? "5rem" : "0",
+                    zIndex: index === 1 ? 30 : 20, // 中间照片 z-index 更高
                   }}
                   initial={{ opacity: 0, y: 20, rotate: 0 }}
                   animate={{ opacity: 1, y: 0, rotate: image.rotation }}

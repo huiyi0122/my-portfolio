@@ -1,404 +1,401 @@
-/*C:\Users\user\my-portfolio\app\components\about\SkillsTech.tsx*/
 "use client";
 
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../LanguageProvider";
-import React, { useMemo } from "react";
 
-// --- 1. 数据定义 ---
-interface Technology {
+interface Skill {
+  id: string;
   name: string;
   icon: string;
-  level: 1 | 2 | 3 | 4;
+  category: "frontend" | "backend" | "tools";
+  level: number;
+  color: string;
+  description: string;
 }
 
-const SKILLS_DATA: Technology[] = [
-  // Languages & Frameworks
+const SKILLS_DATA: Skill[] = [
   {
+    id: "js",
     name: "JavaScript",
     icon: "/images/icons/javascript.png",
-    level: 4,
+    category: "frontend",
+    level: 4.5,
+    color: "#F7DF1E",
+    description:
+      "A versatile, high-level programming language that is one of the core technologies of the World Wide Web.",
   },
   {
-    name: "NextJS",
-    icon: "/images/icons/nextjs.png",
-    level: 3,
-  },
-  {
+    id: "ts",
     name: "TypeScript",
     icon: "/images/icons/typescript.png",
-    level: 2,
+    category: "frontend",
+    level: 4.2,
+    color: "#3178C6",
+    description:
+      "Typed superset of JavaScript that provides static type checking and enhanced IDE support.",
   },
   {
-    name: "Python",
-    icon: "/images/icons/python.png",
-    level: 1,
-  },
-
-  // Frontend
-  {
+    id: "react",
     name: "React",
     icon: "/images/icons/react.png",
-    level: 4,
+    category: "frontend",
+    level: 4.8,
+    color: "#61DAFB",
+    description:
+      "A library for building user interfaces with a component-based architecture and virtual DOM.",
   },
   {
-    name: "Tailwind CSS",
+    id: "nextjs",
+    name: "Next.js",
+    icon: "/images/icons/nextjs.png",
+    category: "frontend",
+    level: 4.3,
+    color: "#000000",
+    description:
+      "A React framework for production with server-side rendering and static site generation.",
+  },
+  {
+    id: "tailwind",
+    name: "Tailwind",
     icon: "/images/icons/tailwindcss.png",
-    level: 2,
+    category: "frontend",
+    level: 4.7,
+    color: "#06B6D4",
+    description:
+      "A utility-first CSS framework for rapidly building custom user interfaces.",
   },
   {
+    id: "html",
     name: "HTML/CSS",
     icon: "/images/icons/html.png",
-    level: 1,
+    category: "frontend",
+    level: 4.6,
+    color: "#E34F26",
+    description:
+      "The standard markup and style sheet languages for creating web pages and applications.",
   },
-
-  // Databases
   {
+    id: "nodejs",
+    name: "Node.js",
+    icon: "/images/icons/nodejs.svg",
+    category: "backend",
+    level: 4.0,
+    color: "#339933",
+    description:
+      "A JavaScript runtime built on Chrome's V8 engine for scalable server-side applications.",
+  },
+  {
+    id: "python",
+    name: "Python",
+    icon: "/images/icons/python.png",
+    category: "backend",
+    level: 3.8,
+    color: "#3776AB",
+    description:
+      "A high-level, general-purpose programming language known for its simple, readable syntax.",
+  },
+  {
+    id: "mysql",
     name: "MySQL",
     icon: "/images/icons/mysql.png",
-    level: 4,
-  },
-  {
-    name: "MAMP",
-    icon: "/images/icons/MAMP.png",
-    level: 1,
+    category: "backend",
+    level: 4.1,
+    color: "#4479A1",
+    description:
+      "An open-source relational database management system widely used for storing structured data.",
   },
 
-  // DevOps & Tools
   {
-    name: "Git/GitHub",
+    id: "git",
+    name: "Git",
     icon: "/images/icons/github2.png",
-    level: 4,
+    category: "tools",
+    level: 4.6,
+    color: "#181717",
+    description:
+      "A distributed version control system for tracking changes in source code during software development.",
   },
   {
-    name: "VS Code",
-    icon: "/images/icons/vscode.png",
-    level: 2,
-  },
-  {
-    name: "Postman",
-    icon: "/images/icons/postman.svg",
-    level: 1,
-  },
-  {
+    id: "docker",
     name: "Docker",
     icon: "/images/icons/docker.svg",
-    level: 3,
+    category: "tools",
+    level: 3.5,
+    color: "#2496ED",
+    description:
+      "A platform for developing, shipping, and running applications in isolated containers.",
+  },
+  {
+    id: "vscode",
+    name: "VS Code",
+    icon: "/images/icons/vscode.png",
+    category: "tools",
+    level: 4.9,
+    color: "#007ACC",
+    description:
+      "A powerful, lightweight code editor with built-in support for debugging, Git control, and extensions.",
+  },
+  {
+    id: "postman",
+    name: "Postman",
+    icon: "/images/icons/postman.svg",
+    category: "tools",
+    level: 4.0,
+    color: "#FF6C37",
+    description:
+      "An API platform for developers to design, build, test and iterate on their APIs.",
   },
 ];
 
-// --- 2. SVG 尺寸和计算常量 ---
-const SIZE = 1200;
-const CENTER = SIZE / 2;
-const NUM_LEVELS = 4;
-const MAX_RADIUS = CENTER * 0.6;
-const LEVEL_DISTANCE = MAX_RADIUS / NUM_LEVELS;
-const FLATTEN_SCALE = 0.6;
-
-// 使用一个简单的伪随机数生成器，确保位置固定
-const seededRandom = (seed: number) => {
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
-};
-
-// 改进的位置生成算法 - 避免重叠并使用确定性随机
-const getDistributedPointOnCircle = (
-  level: number,
-  indexInLevel: number,
-  totalInLevel: number,
-  seed: number
-) => {
-  const baseAngle = ((Math.PI * 2) / totalInLevel) * indexInLevel;
-  const angleJitter =
-    (seededRandom(seed) - 0.5) * ((Math.PI * 2) / totalInLevel) * 0.6;
-  const angle = baseAngle + angleJitter;
-
-  const radiusJitter = (seededRandom(seed + 100) - 0.5) * LEVEL_DISTANCE * 0.4;
-  const radius = level * LEVEL_DISTANCE + radiusJitter;
-  const finalRadius = Math.max(radius, LEVEL_DISTANCE * 0.8);
-
-  const x = CENTER + finalRadius * Math.cos(angle);
-  const y = CENTER + finalRadius * Math.sin(angle);
-
-  return { x, y };
-};
-
-// --- 3. 雷达图内容组件 ---
-const SkillsRadarContent: React.FC<{ darkMode: boolean; trigger: number }> = ({
-  darkMode,
-  trigger,
-}) => {
-  const radarColor = darkMode ? "stroke-cyan-400/60" : "stroke-indigo-400/60";
-  const radarGlow = darkMode ? "#22d3ee" : "#818cf8";
-  const textColor = darkMode ? "fill-slate-200" : "fill-slate-700";
-  const bgGradient = darkMode
-    ? "from-slate-800/40 to-slate-900/60"
-    : "from-white/60 to-slate-50/80";
-
-  const skillPositions = useMemo(() => {
-    const skillsByLevel: Record<string, Technology[]> = {};
-    SKILLS_DATA.forEach((skill) => {
-      if (!skillsByLevel[skill.level]) {
-        skillsByLevel[skill.level] = [];
-      }
-      skillsByLevel[skill.level].push(skill);
-    });
-
-    return SKILLS_DATA.map((skill, index) => {
-      const skillsInLevel = skillsByLevel[skill.level];
-      const indexInLevel = skillsInLevel.findIndex(
-        (s) => s.name === skill.name
-      );
-
-      return getDistributedPointOnCircle(
-        skill.level,
-        indexInLevel,
-        skillsInLevel.length,
-        index
-      );
-    });
-  }, []);
-
+const SkillCard: React.FC<{
+  skill: Skill;
+  darkMode: boolean;
+  isSelected: boolean;
+  onClick: () => void;
+}> = ({ skill, darkMode, isSelected, onClick }) => {
   return (
-    <div className="flex justify-center items-center w-full h-full relative">
-      {/* 雷达图层 */}
-      <svg
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
-        className="w-full h-auto absolute"
-        style={{
-          overflow: "visible",
-          transform: `scaleY(${FLATTEN_SCALE})`,
-        }}
+    <motion.div
+      variants={itemVariants}
+      className={`flex items-center gap-4 p-4 rounded-lg border transition-all duration-300 cursor-pointer ${
+        isSelected
+          ? darkMode
+            ? "bg-slate-700 border-cyan-400"
+            : "bg-slate-100 border-indigo-500"
+          : darkMode
+          ? "bg-slate-800/50 border-slate-700 hover:border-slate-600"
+          : "bg-white border-slate-200 hover:border-slate-300"
+      }`}
+      onClick={onClick}
+    >
+      <img src={skill.icon} alt={skill.name} className="w-8 h-8" />
+      <h3
+        className={`font-medium text-base ${
+          darkMode ? "text-white" : "text-zinc-900"
+        }`}
       >
-        <defs>
-          <radialGradient id="centerGlow">
-            <stop offset="0%" stopColor={radarGlow} stopOpacity="0.2" />
-            <stop offset="50%" stopColor={radarGlow} stopOpacity="0.1" />
-            <stop offset="100%" stopColor={radarGlow} stopOpacity="0" />
-          </radialGradient>
-        </defs>
-
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r={MAX_RADIUS}
-          fill="url(#centerGlow)"
-        />
-
-        {[...Array(NUM_LEVELS)].map((_, i) => {
-          const radius = (i + 1) * LEVEL_DISTANCE;
-          return (
-            <circle
-              key={i}
-              cx={CENTER}
-              cy={CENTER}
-              r={radius}
-              className={radarColor}
-              strokeWidth="2"
-              fill="none"
-            />
-          );
-        })}
-      </svg>
-
-      {/* 图标层 */}
-      <svg
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
-        className="w-full h-auto absolute"
-        style={{ overflow: "visible" }}
-      >
-        <defs>
-          <filter id="iconShadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0" dy="4" stdDeviation="6" floodOpacity="0.3" />
-          </filter>
-
-          <linearGradient id="iconBg" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop
-              offset="0%"
-              className={bgGradient.split(" ")[0].replace("from-", "")}
-            />
-            <stop
-              offset="100%"
-              className={bgGradient.split(" ")[1].replace("to-", "")}
-            />
-          </linearGradient>
-        </defs>
-
-        {SKILLS_DATA.map((skill, index) => {
-          const { x, y } = skillPositions[index];
-          const adjustedY = CENTER + (y - CENTER) * FLATTEN_SCALE;
-          const imageSize = 25;
-          const bgSize = imageSize + 14;
-
-          const [isHovered, setIsHovered] = React.useState(false);
-
-          return (
-            <motion.g
-              key={`${skill.name}-${index}-${trigger}`}
-              initial={{
-                x: CENTER - x,
-                y: CENTER - adjustedY,
-                scale: 0,
-                opacity: 0,
-              }}
-              animate={{
-                x: 0,
-                y: 0,
-                scale: 1,
-                opacity: 1,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-                delay: 0.6 + index * 0.05,
-              }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              style={{ cursor: "pointer" }}
-            >
-              <circle
-                cx={x}
-                cy={adjustedY}
-                r={bgSize / 2}
-                className={`${
-                  darkMode ? "fill-slate-800/90" : "fill-white/90"
-                }`}
-                filter="url(#iconShadow)"
-              />
-
-              <circle
-                cx={x}
-                cy={adjustedY}
-                r={bgSize / 2}
-                className={
-                  darkMode ? "stroke-cyan-400/40" : "stroke-indigo-400/40"
-                }
-                strokeWidth="2"
-                fill="none"
-              />
-
-              <image
-                href={skill.icon}
-                x={x - imageSize / 2}
-                y={adjustedY - imageSize / 2}
-                width={imageSize}
-                height={imageSize}
-                style={{ clipPath: `circle(${imageSize / 2}px at center)` }}
-              />
-
-              <motion.text
-                x={x}
-                y={adjustedY + bgSize / 2 + 22}
-                className={`text-[13px] font-semibold ${textColor}`}
-                textAnchor="middle"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isHovered ? 1 : 0 }}
-                transition={{ duration: 0.2 }}
-                style={{
-                  textShadow: darkMode
-                    ? "0 2px 4px rgba(0,0,0,0.6)"
-                    : "0 2px 4px rgba(255,255,255,0.8)",
-                  pointerEvents: "none",
-                }}
-              >
-                {skill.name}
-              </motion.text>
-            </motion.g>
-          );
-        })}
-      </svg>
-    </div>
+        {skill.name}
+      </h3>
+    </motion.div>
   );
 };
 
-// --- 4. 导出主组件 ---
+// --- 技能详情面板组件 ---
+interface SkillDetailPanelProps {
+  skill: Skill | null;
+  darkMode: boolean;
+  onClose: () => void;
+}
+
+const SkillDetailPanel: React.FC<SkillDetailPanelProps> = ({
+  skill,
+  darkMode,
+  onClose,
+}) => {
+  if (!skill) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      className={`fixed inset-x-4 bottom-4 md:bottom-auto md:right-8 md:top-1/2 md:transform md:-translate-y-1/2 z-20 p-6 rounded-2xl backdrop-blur-xl border shadow-2xl max-w-md mx-auto md:mx-0 ${
+        darkMode
+          ? "bg-slate-900/90 border-slate-700"
+          : "bg-white/90 border-slate-200"
+      }`}
+    >
+      {/* 关闭按钮 */}
+      <button
+        onClick={onClose}
+        className={`absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+          darkMode
+            ? "bg-slate-800 hover:bg-slate-700"
+            : "bg-slate-100 hover:bg-slate-200"
+        }`}
+      >
+        ✕
+      </button>
+
+      {/* 图标和名称 */}
+      <div className="flex items-center space-x-4 mb-6">
+        <div
+          className="w-16 h-16 rounded-xl flex items-center justify-center shadow-lg"
+          style={{ backgroundColor: skill.color + "20" }}
+        >
+          <img src={skill.icon} alt={skill.name} className="w-10 h-10" />
+        </div>
+        <div>
+          <h3
+            className={`text-2xl font-bold ${
+              darkMode ? "text-white" : "text-slate-900"
+            }`}
+          >
+            {skill.name}
+          </h3>
+          <span
+            className={`inline-block px-3 py-1 rounded-full text-sm font-medium mt-1 ${
+              darkMode
+                ? "bg-slate-800 text-slate-300"
+                : "bg-slate-100 text-slate-700"
+            }`}
+          >
+            {skill.category}
+          </span>
+        </div>
+      </div>
+
+      {/* 描述 */}
+      <p className={`mb-6 ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
+        {skill.description}
+      </p>
+
+      {/* 技能等级进度条 */}
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <span
+            className={`text-sm font-medium ${
+              darkMode ? "text-slate-400" : "text-slate-600"
+            }`}
+          >
+            Proficiency Level
+          </span>
+          <span
+            className={`text-sm font-bold ${
+              darkMode ? "text-cyan-400" : "text-indigo-600"
+            }`}
+          >
+            {skill.level}/5
+          </span>
+        </div>
+        <div
+          className={`h-2 rounded-full overflow-hidden ${
+            darkMode ? "bg-slate-800" : "bg-slate-200"
+          }`}
+        >
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${(skill.level / 5) * 100}%` }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="h-full rounded-full"
+            style={{
+              background: `linear-gradient(90deg, ${skill.color}80, ${skill.color})`,
+            }}
+          />
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
+
 interface SkillsTechProps {
   darkMode: boolean;
 }
 
 export default function SkillsTech({ darkMode }: SkillsTechProps) {
-  const [animationTrigger, setAnimationTrigger] = React.useState(0);
-  const sectionRef = React.useRef<HTMLElement>(null);
   const { t } = useLanguage();
+  const [filter, setFilter] = useState<
+    "all" | "frontend" | "backend" | "tools"
+  >("all");
+  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
 
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // 每次进入视口时增加 trigger，强制重新渲染并播放动画
-            setAnimationTrigger((prev) => prev + 1);
-          }
-        });
-      },
-      { threshold: 0.3 } // 当 30% 可见时触发
-    );
+  const handleCardClick = (skill: Skill) => {
+    setSelectedSkill(selectedSkill?.id === skill.id ? null : skill);
+  };
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
+  const filtered =
+    filter === "all"
+      ? SKILLS_DATA
+      : SKILLS_DATA.filter((s) => s.category === filter);
 
   return (
     <section
-      ref={sectionRef}
-      className={`h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 relative overflow-hidden transition-colors duration-700 ${
+      data-scrollable="true"
+      className={`relative w-full h-screen overflow-y-auto px-6 py-16 ${
         darkMode ? "bg-slate-900" : "bg-slate-50"
       }`}
     >
-      <motion.div
-        className="max-w-7xl mx-auto w-full grid lg:grid-cols-[1fr_3fr] gap-8 lg:gap-16 items-center"
-        style={{ height: "calc(100% - 160px)" }} // 减去 section 的 py-20 (80px*2)
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-      >
-        {/* Left Column: Title */}
-        <div className="text-center lg:text-left order-2 lg:order-1">
-          <motion.p
-            className={`text-sm font-semibold tracking-[0.25em] uppercase transition-colors duration-700 ${
-              darkMode ? "text-slate-400" : "text-slate-500"
+      <div className="max-w-5xl mx-auto md:pt-16 text-center">
+        {/* Header */}
+        <div className="mb-8">
+          <p className="text-sm mb-2 text-zinc-500">{t.about.skill.header}</p>
+          <h2
+            className={`text-xl font-bold mb-6 ${
+              darkMode ? "text-white" : "text-zinc-900"
             }`}
-            style={{
-              fontFamily:
-                "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
-            }}
-          >
-            {t.about.skill.header}
-          </motion.p>
-          <motion.h2
-            className={`text-4xl md:text-5xl font-light mt-4 tracking-tight ${
-              darkMode ? "text-white" : "text-slate-900"
-            }`}
-            style={{
-              fontFamily:
-                "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
-              fontWeight: 300,
-              letterSpacing: "-0.02em",
-            }}
           >
             {t.about.skill.title}
-          </motion.h2>
+          </h2>
+
+          {/* Filter */}
+          <div className="flex gap-2">
+            {(["all", "frontend", "backend", "tools"] as const).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => {
+                  setFilter(cat);
+                  setSelectedSkill(null); // Reset selection on filter change
+                }}
+                className={`px-4 py-2 rounded-lg text-sm transition-colors ${
+                  filter === cat
+                    ? darkMode
+                      ? "bg-cyan-500 text-white"
+                      : "bg-indigo-500 text-white"
+                    : darkMode
+                    ? "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+                    : "bg-white text-zinc-600 hover:bg-zinc-100"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* 雷达图 */}
+        {/* Skills Grid */}
         <motion.div
-          className="relative order-1 lg:order-2"
-          style={{ height: "min(100%, 1000px)" }} // 响应式高度，最大 1000px
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          key={filter} // Add this key to re-trigger animation on filter change
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <SkillsRadarContent darkMode={darkMode} trigger={animationTrigger} />
+          {filtered.map((skill) => (
+            <SkillCard
+              key={skill.id}
+              skill={skill}
+              darkMode={darkMode}
+              isSelected={selectedSkill?.id === skill.id}
+              onClick={() => handleCardClick(skill)}
+            />
+          ))}
         </motion.div>
-      </motion.div>
+      </div>
+
+      <AnimatePresence>
+        {selectedSkill && (
+          <SkillDetailPanel
+            skill={selectedSkill}
+            darkMode={darkMode}
+            onClose={() => setSelectedSkill(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -54,9 +54,9 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
     { src: "/images/portraits-1.png", rotate: -8, scale: 0.95, delay: 0 },
     { src: "/images/portraits-2.png", rotate: 4, scale: 1, delay: 0.1 },
     { src: "/images/portraits-3.png", rotate: -6, scale: 0.98, delay: 0.2 },
-    { src: "/images/portraits-4.png", rotate: 2, scale: 1.02, delay: 0.3 },
-    { src: "/images/portraits-5.png", rotate: 5, scale: 0.96, delay: 0.4 },
-    { src: "/images/portraits-6.png", rotate: 5, scale: 0.96, delay: 0.4 },
+    { src: "/images/portraits-4.png", rotate: 4, scale: 1.02, delay: 0.3 },
+    { src: "/images/portraits-5.png", rotate: -5, scale: 0.96, delay: 0.4 },
+    { src: "/images/portraits-6.png", rotate: 8, scale: 0.96, delay: 0.4 },
   ];
 
   return (
@@ -68,14 +68,14 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
       <div className="max-w-6xl mx-auto w-full relative z-10 flex flex-col justify-center h-full">
         {/* ================== TEXT CONTENT ================== */}
         <motion.div
-          className="flex flex-col items-center text-center space-y-8 pb-32"
+          className="flex flex-col items-center text-center space-y-8 pt-10 md:pt-0 pb-32"
           variants={containerVariants}
           initial="hidden"
           animate={controls}
         >
           <motion.div variants={itemVariants} className="space-y-3">
             <h1
-              className={`text-6xl sm:text-7xl md:text-5xl font-light tracking-tight leading-[0.95] transition-colors duration-700 ${
+              className={`text-3xl sm:text-7xl md:text-5xl font-light tracking-tight leading-[0.95] transition-colors duration-700 ${
                 darkMode ? "text-white" : "text-[#e8f5f2]"
               }`}
               style={{
@@ -88,7 +88,7 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
             </h1>
 
             <h2
-              className={`text-6xl sm:text-7xl md:text-8xl font-medium tracking-tight leading-[0.95] transition-colors duration-700 ${
+              className={`text-5xl sm:text-7xl md:text-8xl font-medium tracking-tight leading-[0.95] transition-colors duration-700 ${
                 darkMode ? "text-zinc-400" : "text-[#a8d5c9]"
               }`}
               style={{
@@ -103,7 +103,7 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
 
           <motion.p
             variants={itemVariants}
-            className={`text-lg md:text-xl leading-relaxed max-w-xl transition-colors duration-700 ${
+            className={`text-sm md:text-xl leading-relaxed max-w-xl transition-colors duration-700 ${
               darkMode ? "text-zinc-500" : "text-[#c5e4db]"
             }`}
           >
@@ -112,11 +112,11 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
 
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 pt-4"
+            className="flex flex-row gap-4 pt-4"
           >
             <Link href="/project" passHref>
               <RippleButton
-                className={`relative overflow-hidden px-9 py-3.5 font-medium transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative overflow-hidden px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-300 hover:scale-[1.02] ${
                   darkMode
                     ? "bg-[#262626] ring-1 ring-white/20 text-white hover:bg-white/5"
                     : "bg-white ring-1 ring-[#ffffff]/30 text-[#000000] hover:bg-white/10 hover:text-white"
@@ -136,7 +136,7 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
 
             <Link href="/about" passHref>
               <RippleButton
-                className={`relative overflow-hidden px-9 py-3.5 font-medium transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative overflow-hidden px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-300 hover:scale-[1.02] ${
                   darkMode
                     ? "bg-[#262626] ring-1 ring-white/20 text-white hover:bg-white/5"
                     : "ring-1 ring-[#e8f5f2]/30 text-[#e8f5f2] hover:bg-white/10"
@@ -159,7 +159,7 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
         {/* ================== PORTRAITS ================== */}
         <motion.div
           className="
-            absolute bottom-30 left-1/2 -translate-x-1/2
+            absolute bottom-30 sm:bottom-20 left-1/2 -translate-x-1/2
             flex items-center justify-center
             gap-3 sm:gap-6 md:gap-8
           "
@@ -172,7 +172,7 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
               key={index}
               className={`
                 relative flex-shrink-0
-                w-[80px] h-[80px]
+                w-[70px] h-[70px]
                 sm:w-[130px] sm:h-[130px]
                 md:w-[110px] md:h-[110px]
                 lg:w-[150px] lg:h-[150px]
@@ -204,19 +204,6 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
             </motion.div>
           ))}
         </motion.div>
-      </div>
-
-      {/* ================== DIVIDER ================== */}
-      <div className="absolute bottom-0 left-0 w-full opacity-30">
-        <Image
-          src={
-            darkMode ? "/images/divider_dark.svg" : "/images/divider_light.svg"
-          }
-          alt="Divider"
-          width={1920}
-          height={80}
-          className=" w-full h-auto"
-        />
       </div>
     </section>
   );
