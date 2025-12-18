@@ -1,15 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
   Facebook,
   Instagram,
-  Twitter,
-  Linkedin,
-  Heart,
   Send,
   Github, // Add Github icon
+  CheckCircle, // Add CheckCircle icon for success popup
 } from "lucide-react";
 import React, { useState, useRef } from "react";
 
@@ -22,6 +20,61 @@ import {
   RippleButtonRipples,
 } from "@/components/animate-ui/components/buttons/ripple";
 
+// New component for the success popup
+const SuccessPopup: React.FC<{
+  darkMode: boolean;
+  onClose: () => void;
+  message: string;
+}> = ({ darkMode, onClose, message }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+      onClick={onClose} // Close when clicking outside
+    >
+      <motion.div
+        initial={{ scale: 0.9, y: 50 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 50 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        className={`relative p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center ${
+          darkMode
+            ? "bg-slate-800 border border-slate-700"
+            : "bg-white border border-slate-200"
+        }`}
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+      >
+        <button
+          onClick={onClose}
+          className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+            darkMode
+              ? "bg-slate-700 hover:bg-slate-600 text-white"
+              : "bg-slate-100 hover:bg-slate-200 text-zinc-900"
+          }`}
+        >
+          ✕
+        </button>
+        <div className="text-green-500 mb-4">
+          <CheckCircle className="h-12 w-12 mx-auto" />
+        </div>
+        <h3
+          className={`text-xl font-bold mb-2 ${
+            darkMode ? "text-white" : "text-zinc-900"
+          }`}
+        >
+          Success!
+        </h3>
+        <p
+          className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+        >
+          {message}
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+};
 const socialLinks = [
   // Updated social links
 
@@ -445,20 +498,16 @@ export default function ContactPage() {
                 </RippleButton>
               </div>
 
-              {/* Status Messages */}
-              {submissionStatus === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-lg text-sm text-center font-medium ${
-                    darkMode
-                      ? "bg-green-500/10 text-green-400 border border-green-500/20"
-                      : "bg-green-500/10 text-[#2F7D6C] border border-green-500/20"
-                  }`}
-                >
-                  ✓ Your message has been sent successfully!
-                </motion.div>
-              )}
+              {/* Success Popup */}
+              <AnimatePresence>
+                {submissionStatus === "success" && (
+                  <SuccessPopup
+                    darkMode={darkMode}
+                    onClose={() => setSubmissionStatus("idle")}
+                    message="Your message has been sent successfully!"
+                  />
+                )}
+              </AnimatePresence>
 
               {submissionStatus === "error" && (
                 <motion.div
