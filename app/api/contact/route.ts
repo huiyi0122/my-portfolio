@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+
+    if (!apiKey) {
+      console.error("RESEND_API_KEY is missing");
+      return NextResponse.json({ message: "服务器配置错误" }, { status: 500 });
+    }
+
+    const resend = new Resend(apiKey);
+
     const { name, email, subject, message } = await request.json();
 
     if (!name || !email || !subject || !message) {
@@ -14,16 +21,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!process.env.CONTACT_RECEIVER_EMAIL) {
-      return NextResponse.json(
-        { message: "服务器配置错误。" },
-        { status: 500 }
-      );
-    }
-
     await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
-      to: process.env.CONTACT_RECEIVER_EMAIL,
+      to: process.env.CONTACT_RECEIVER_EMAIL!,
       replyTo: email,
       subject: `来自联系表单的新消息: ${subject}`,
       html: `
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       `,
     });
 
-    return NextResponse.json({ message: "邮件发送成功！" }, { status: 200 });
+    return NextResponse.json({ message: "邮件发送成功！" });
   } catch (error) {
     console.error("Resend error:", error);
     return NextResponse.json(

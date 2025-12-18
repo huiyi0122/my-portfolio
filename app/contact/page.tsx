@@ -9,6 +9,7 @@ import {
   Linkedin,
   Heart,
   Send,
+  Github, // Add Github icon
 } from "lucide-react";
 import React, { useState, useRef } from "react";
 
@@ -22,11 +23,26 @@ import {
 } from "@/components/animate-ui/components/buttons/ripple";
 
 const socialLinks = [
-  { id: "like", icon: Heart, href: "#", label: "Like" },
-  { id: "facebook", icon: Facebook, href: "#", label: "Facebook" },
-  { id: "instagram", icon: Instagram, href: "#", label: "Instagram" },
-  { id: "twitter", icon: Twitter, href: "#", label: "Twitter" },
-  { id: "linkedin", icon: Linkedin, href: "#", label: "LinkedIn" },
+  // Updated social links
+
+  {
+    id: "instagram",
+    icon: Instagram,
+    href: "https://instagram.com/yourusername",
+    label: "Instagram",
+  },
+  {
+    id: "facebook",
+    icon: Facebook,
+    href: "https://facebook.com/yourusername",
+    label: "Facebook",
+  },
+  {
+    id: "github",
+    icon: Github,
+    href: "https://github.com/yourusername",
+    label: "GitHub",
+  },
 ];
 
 export default function ContactPage() {
@@ -153,7 +169,7 @@ export default function ContactPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <h1
-                className={`text-5xl lg:text-6xl font-serif font-bold mb-6 ${
+                className={`text-4xl lg:text-6xl font-serif font-bold mb-6 ${
                   darkMode ? "text-white" : "text-white"
                 }`}
               >
