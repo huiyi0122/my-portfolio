@@ -47,3 +47,13 @@ export async function POST(request: Request) {
     );
   }
 }
+// app/api/env-test/route.ts
+export async function GET() {
+  return new Response(
+    JSON.stringify({
+      RESEND_API_KEY: !!process.env.RESEND_API_KEY,
+      CONTACT_RECEIVER_EMAIL: !!process.env.CONTACT_RECEIVER_EMAIL,
+    }),
+    { status: 200 }
+  );
+}
