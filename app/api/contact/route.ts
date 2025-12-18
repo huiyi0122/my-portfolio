@@ -1,17 +1,24 @@
+// app/api/contact/route.ts
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export async function POST(request: Request) {
   try {
-    const apiKey = process.env.RESEND_API_KEY;
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    const CONTACT_RECEIVER_EMAIL = process.env.CONTACT_RECEIVER_EMAIL;
 
-    if (!apiKey) {
-      console.error("RESEND_API_KEY is missing");
-      return NextResponse.json({ message: "服务器配置错误" }, { status: 500 });
+    if (!RESEND_API_KEY || !CONTACT_RECEIVER_EMAIL) {
+      console.error("环境变量未配置:", {
+        RESEND_API_KEY: !!RESEND_API_KEY,
+        CONTACT_RECEIVER_EMAIL: !!CONTACT_RECEIVER_EMAIL,
+      });
+      return NextResponse.json(
+        { message: "服务器配置错误：环境变量未设置" },
+        { status: 500 }
+      );
     }
 
-    const resend = new Resend(apiKey);
-
+    const resend = new Resend(RESEND_API_KEY);
     const { name, email, subject, message } = await request.json();
 
     if (!name || !email || !subject || !message) {
@@ -23,7 +30,7 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
-      to: process.env.CONTACT_RECEIVER_EMAIL!,
+      to: CONTACT_RECEIVER_EMAIL,
       replyTo: email,
       subject: `来自联系表单的新消息: ${subject}`,
       html: `
@@ -47,8 +54,10 @@ export async function POST(request: Request) {
     );
   }
 }
+
 // app/api/env-test/route.ts
 export async function GET() {
+  console.log("ENV TEST HIT"); // 部署日志可见
   return new Response(
     JSON.stringify({
       RESEND_API_KEY: !!process.env.RESEND_API_KEY,
