@@ -289,19 +289,19 @@ const socialLinks = [
   {
     id: "instagram",
     icon: Instagram,
-    href: "https://instagram.com/yourusername",
+    href: "https://instagram.com/huiyi3617",
     label: "Instagram",
   },
   {
     id: "facebook",
     icon: Facebook,
-    href: "https://facebook.com/yourusername",
+    href: "https://facebook.com/huiyi.chai.33",
     label: "Facebook",
   },
   {
     id: "github",
     icon: Github,
-    href: "https://github.com/yourusername",
+    href: "https://github.com/huiyi0122",
     label: "GitHub",
   },
 ];
