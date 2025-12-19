@@ -54,7 +54,7 @@ export default function ProjectDetailHero({
           (slide: { url: string; caption: string }, index: number) => (
             <motion.div
               key={index}
-              className="absolute inset-0 flex items-center justify-center px-12 pt-24"
+              className="absolute inset-0 flex items-center justify-center px-4 sm:px-12 pt-16 sm:pt-24"
               initial={{ opacity: 0 }}
               animate={{ opacity: currentSlide === index ? 1 : 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
@@ -73,24 +73,42 @@ export default function ProjectDetailHero({
 
       {/* Controls Bar */}
       <div
-        className={`h-[15vh] flex items-center justify-center transition-colors duration-700 ${
-          darkMode ? "bg-zinc-950" : "bg-[#1a3f38]"
+        className={`h-[15vh] pb-32 sm:pb-0 flex items-center justify-center transition-colors duration-700 ${
+          darkMode ? "bg-zinc-950" : "bg-[#215245]"
         }`}
       >
-        <div className="w-full max-w-7xl mx-auto px-8 flex items-center justify-between">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
           {/* Caption */}
-          <motion.div
-            className={`text-sm font-medium tracking-wider uppercase transition-colors duration-700 ${
-              darkMode ? "text-white" : "text-[#e8f5f2]"
-            }`}
-            style={{
-              fontFamily:
-                "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
-              letterSpacing: "0.1em",
-            }}
-          >
-            {slides[currentSlide].caption}
-          </motion.div>
+          <div className="flex flex-col">
+            <h1
+              className={`text-sm sm:text-xl font-medium tracking-tight transition-colors duration-700 ${
+                darkMode ? "text-white" : "text-[#e8f5f2]"
+              }`}
+              style={{
+                fontFamily:
+                  "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {title}
+            </h1>
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className={`text-xs sm:text-sm font-medium tracking-wider uppercase mt-1 ${
+                darkMode ? "text-zinc-400" : "text-[#a8d5c9]"
+              }`}
+              style={{
+                fontFamily:
+                  "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                letterSpacing: "0.1em",
+              }}
+            >
+              {slides[currentSlide].caption}
+            </motion.div>
+          </div>
 
           {/* Navigation */}
           <div className="flex items-center gap-5">

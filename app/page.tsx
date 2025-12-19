@@ -12,29 +12,16 @@ import TypewriterIntro from "@/app/components/TypewriterIntro";
 
 export default function Home() {
   const { darkMode } = useDarkMode();
-  const [showIntro, setShowIntro] = useState(true);
-
-  // Development: always show animation, Production: use sessionStorage
-  useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      if (sessionStorage.getItem("hasSeenIntro")) {
-        setShowIntro(false);
-      }
-    }
-  }, []);
-
-  const handleIntroComplete = useCallback(() => {
-    if (process.env.NODE_ENV === "production") {
-      sessionStorage.setItem("hasSeenIntro", "true");
-    }
-    setShowIntro(false);
-  }, []);
+  const [showIntro, setShowIntro] = useState(false);
 
   return (
     <div className="relative min-h-screen">
       {/* Opening Animation */}
       {showIntro && (
-        <TypewriterIntro darkMode={darkMode} onComplete={handleIntroComplete} />
+        <TypewriterIntro
+          darkMode={darkMode}
+          onComplete={() => setShowIntro(false)}
+        />
       )}
 
       {/* Background */}
@@ -55,7 +42,7 @@ export default function Home() {
       {/* Main Content with Fullpage Scroll */}
       {!showIntro && (
         <FullPageScroll>
-          <Hero darkMode={darkMode} startAnimation={!showIntro} />
+          <Hero darkMode={darkMode} />
           <Traits darkMode={darkMode} />
           <Contact darkMode={darkMode} />
         </FullPageScroll>

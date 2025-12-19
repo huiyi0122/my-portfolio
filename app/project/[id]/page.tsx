@@ -46,17 +46,11 @@ export default function ProjectDetailPage() {
         <ProjectGoal darkMode={darkMode} projectId={projectId as string} />
         <ProjectAudience darkMode={darkMode} projectId={projectId as string} />
         <ProjectTimeline darkMode={darkMode} projectId={projectId as string} />
-        {/* 组合非全屏组件 */}
-        <div className="h-screen w-full overflow-y-auto">
-          <ProjectResponsive
-            darkMode={darkMode}
-            projectId={projectId as string}
-          />
-          <ProjectFeatures
-            darkMode={darkMode}
-            projectId={projectId as string}
-          />
-        </div>
+        <ProjectResponsive
+          darkMode={darkMode}
+          projectId={projectId as string}
+        />
+        <ProjectFeatures darkMode={darkMode} projectId={projectId as string} />
         <ProjectCTA darkMode={darkMode} />
       </FullPageScroll>
     </div>

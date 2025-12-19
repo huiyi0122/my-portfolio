@@ -7,6 +7,7 @@ import ProjectStats from "@/app/components/project/ProjectStats";
 import ProjectList from "@/app/components/project/ProjectList";
 import FullPageScroll from "@/app/components/home/FullPageScroll";
 import { useDarkMode } from "@/app/components/DarkModeProvider";
+import ShootingStars from "../components/project/ShootingStars";
 
 export default function ProjectPage() {
   const { darkMode } = useDarkMode();
@@ -14,6 +15,8 @@ export default function ProjectPage() {
   return (
     <div className="relative min-h-screen">
       {/* Background */}
+      {darkMode && <ShootingStars count={20} />}
+
       <div
         className="fixed inset-0 -z-10 transition-colors duration-700"
         style={{

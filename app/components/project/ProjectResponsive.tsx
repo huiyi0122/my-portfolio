@@ -26,24 +26,24 @@ export default function ProjectResponsive({
     return null;
 
   return (
-    <section className="w-full h-screen px-6 relative flex items-center">
+    <section className="w-full px-4 sm:px-6 md:px-16 py-16 sm:py-20 md:py-24 relative flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
       <div
         ref={elementRef}
-        className={`max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16 w-full h-full ${
+        className={`max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full ${
           isVisible ? "scroll-reveal" : ""
         }`}
       >
         {/* 左侧 */}
-        <div className="flex-1 flex flex-col justify-center text-center lg:text-left space-y-6 h-full">
+        <div className="flex-1 flex flex-col justify-center text-center lg:text-left space-y-4 sm:space-y-6">
           <h2
-            className={`text-xl font-bold tracking-[4px] ${
+            className={`text-lg sm:text-xl md:text-2xl font-bold tracking-[2px] ${
               darkMode ? "text-white" : "text-black"
             }`}
           >
             {t.project.Responsive.title}
           </h2>
           <p
-            className={`text-sm ${
+            className={`text-sm sm:text-base ${
               darkMode ? "text-gray-200" : "text-gray-800"
             }`}
           >
@@ -52,10 +52,9 @@ export default function ProjectResponsive({
 
           {/* View Toggle */}
           <div className="flex gap-3 justify-center lg:justify-start mt-4">
-            {/* Desktop Button */}
             <button
               onClick={() => setViewMode("desktop")}
-              className={`flex items-center gap-2 px-6 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 hover:scale-105 border-2 ${
+              className={`flex items-center gap-2 px-4 sm:px-6 py-2 rounded-lg font-semibold text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-105 border-2 ${
                 viewMode === "desktop"
                   ? darkMode
                     ? "bg-yellow-300 border-yellow-300 text-black"
@@ -69,10 +68,9 @@ export default function ProjectResponsive({
               {t.project.Responsive.desktop}
             </button>
 
-            {/* Mobile Button */}
             <button
               onClick={() => setViewMode("mobile")}
-              className={`flex items-center gap-2 px-6 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 hover:scale-105 border-2 ${
+              className={`flex items-center gap-2 px-4 sm:px-6 py-2 rounded-lg font-semibold text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-105 border-2 ${
                 viewMode === "mobile"
                   ? darkMode
                     ? "bg-teal-500 border-teal-500 text-black"
@@ -89,48 +87,45 @@ export default function ProjectResponsive({
         </div>
 
         {/* 右侧 */}
-        <div className="flex-1 flex justify-center items-center h-full relative">
+        <div className="flex-1 flex justify-center items-center w-full relative min-h-[300px] sm:min-h-[400px] max-h-[80vh]">
           <AnimatePresence mode="wait">
             {viewMode === "desktop" ? (
-              <motion.img
+              <motion.div
                 key="desktop"
-                src={project.responsive.desktop}
-                alt="Desktop view"
-                className="rounded-xl object-contain"
-                style={{ width: 550, height: 500 }} // 固定大小
+                className="w-full max-w-lg"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-              />
+              >
+                <Image
+                  src={project.responsive.desktop}
+                  alt="Desktop view"
+                  width={550}
+                  height={500}
+                  className="rounded-xl object-contain w-full h-auto max-h-[70vh]"
+                />
+              </motion.div>
             ) : (
-              <motion.img
-                key="tablet"
-                src={project.responsive.tablet}
-                alt="Tablet view"
-                className="rounded-xl object-contain"
-                style={{ width: 280, height: 560 }} // 固定大小
+              <motion.div
+                key="mobile"
+                className="w-full max-w-[280px]"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-              />
+              >
+                <Image
+                  src={project.responsive.tablet}
+                  alt="Mobile view"
+                  width={280}
+                  height={560}
+                  className="rounded-xl object-contain w-full h-auto max-h-[70vh]"
+                />
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
-      </div>
-
-      {/* Divider */}
-      <div className="absolute bottom-0 left-0 w-full">
-        <Image
-          src={
-            darkMode ? "/images/divider_dark.svg" : "/images/divider_light.svg"
-          }
-          alt="Divider"
-          width={1920}
-          height={80}
-          className="w-full h-auto"
-        />
       </div>
     </section>
   );

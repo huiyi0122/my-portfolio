@@ -48,7 +48,7 @@ const SKILLS_DATA: Skill[] = [
   {
     id: "nextjs",
     name: "Next.js",
-    icon: "/images/icons/nextjs.png",
+    icon: "/images/icons/nextjs.jpg",
     category: "frontend",
     level: 4.3,
     color: "#000000",
@@ -156,21 +156,26 @@ const SkillCard: React.FC<{
 }> = ({ skill, darkMode, isSelected, onClick }) => {
   return (
     <motion.div
+      layout
       variants={itemVariants}
-      className={`flex items-center gap-4 p-4 rounded-lg border transition-all duration-300 cursor-pointer ${
-        isSelected
-          ? darkMode
-            ? "bg-slate-700 border-cyan-400"
-            : "bg-slate-100 border-indigo-500"
-          : darkMode
-          ? "bg-slate-800/50 border-slate-700 hover:border-slate-600"
-          : "bg-white border-slate-200 hover:border-slate-300"
-      }`}
+      className={`
+        flex flex-col items-center justify-center gap-2 p-4 rounded-xl border 
+        transition-all duration-300 cursor-pointer aspect-square
+        ${
+          isSelected
+            ? darkMode
+              ? "bg-slate-700/50 border-cyan-400/70 shadow-lg"
+              : "bg-slate-100 border-indigo-500/70 shadow-lg"
+            : darkMode
+            ? "bg-slate-800/50 border-slate-700 hover:border-slate-600"
+            : "bg-white border-slate-200 hover:border-slate-300"
+        }
+      `}
       onClick={onClick}
     >
-      <img src={skill.icon} alt={skill.name} className="w-8 h-8" />
+      <img src={skill.icon} alt={skill.name} className="w-10 h-10" />
       <h3
-        className={`font-medium text-base ${
+        className={`font-medium text-sm text-center ${
           darkMode ? "text-white" : "text-zinc-900"
         }`}
       >
@@ -325,12 +330,11 @@ export default function SkillsTech({ darkMode }: SkillsTechProps) {
 
   return (
     <section
-      data-scrollable="true"
-      className={`relative w-full h-screen overflow-y-auto px-6 py-16 ${
-        darkMode ? "bg-slate-900" : "bg-slate-50"
+      className={`relative w-full min-h-screen flex px-6 py-24 ${
+        darkMode ? "bg-[#09090B]" : "bg-slate-50" // 移除了 items-center
       }`}
     >
-      <div className="max-w-5xl mx-auto md:pt-16 text-center">
+      <div className="max-w-5xl mx-auto w-full text-center">
         {/* Header */}
         <div className="mb-8">
           <p className="text-sm mb-2 text-zinc-500">{t.about.skill.header}</p>
@@ -369,7 +373,7 @@ export default function SkillsTech({ darkMode }: SkillsTechProps) {
 
         {/* Skills Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4"
           key={filter} // Add this key to re-trigger animation on filter change
           variants={containerVariants}
           initial="hidden"

@@ -2,29 +2,20 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "../LanguageProvider";
-import { useEffect } from "react";
-import { motion, useAnimation, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   RippleButton,
   RippleButtonRipples,
 } from "@/components/animate-ui/components/buttons/ripple";
+import Portraits from "./Portraits";
 
 interface HeroProps {
   darkMode: boolean;
-  startAnimation: boolean;
 }
 
-export default function Hero({ darkMode, startAnimation }: HeroProps) {
+export default function Hero({ darkMode }: HeroProps) {
   const { t } = useLanguage();
-  const controls = useAnimation();
-
-  useEffect(() => {
-    if (startAnimation) {
-      controls.start("visible");
-    }
-  }, [startAnimation, controls]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -50,15 +41,6 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
     },
   };
 
-  const portraits = [
-    { src: "/images/portraits-1.png", rotate: -8, scale: 0.95, delay: 0 },
-    { src: "/images/portraits-2.png", rotate: 4, scale: 1, delay: 0.1 },
-    { src: "/images/portraits-3.png", rotate: -6, scale: 0.98, delay: 0.2 },
-    { src: "/images/portraits-4.png", rotate: 4, scale: 1.02, delay: 0.3 },
-    { src: "/images/portraits-5.png", rotate: -5, scale: 0.96, delay: 0.4 },
-    { src: "/images/portraits-6.png", rotate: 8, scale: 0.96, delay: 0.4 },
-  ];
-
   return (
     <section
       className={`h-screen w-full flex items-center justify-center px-6 relative overflow-hidden transition-all duration-700 ${
@@ -71,7 +53,8 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
           className="flex flex-col items-center text-center space-y-8 pt-10 md:pt-0 pb-32"
           variants={containerVariants}
           initial="hidden"
-          animate={controls}
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.5 }}
         >
           <motion.div variants={itemVariants} className="space-y-3">
             <h1
@@ -157,53 +140,7 @@ export default function Hero({ darkMode, startAnimation }: HeroProps) {
         </motion.div>
 
         {/* ================== PORTRAITS ================== */}
-        <motion.div
-          className="
-            absolute bottom-30 sm:bottom-20 left-1/2 -translate-x-1/2
-            flex items-center justify-center
-            gap-3 sm:gap-6 md:gap-8
-          "
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.6 }}
-        >
-          {portraits.map((portrait, index) => (
-            <motion.div
-              key={index}
-              className={`
-                relative flex-shrink-0
-                w-[70px] h-[70px]
-                sm:w-[130px] sm:h-[130px]
-                md:w-[110px] md:h-[110px]
-                lg:w-[150px] lg:h-[150px]
-
-                ${index > 3 ? "hidden sm:block" : ""}
-                ${index > 4 ? "hidden md:block" : ""}
-              `}
-              initial={{ opacity: 0, y: 20, rotate: 0 }}
-              animate={{ opacity: 1, y: 0, rotate: portrait.rotate }}
-              transition={{
-                duration: 0.8,
-                delay: portrait.delay + 0.8,
-              }}
-              whileHover={{
-                y: -8,
-                rotate: portrait.rotate + (portrait.rotate > 0 ? 2 : -2),
-              }}
-              style={{ transform: `scale(${portrait.scale})` }}
-            >
-              <Image
-                src={portrait.src}
-                alt={`Portrait ${index + 1}`}
-                fill
-                sizes="(max-width: 640px) 110px,
-                       (max-width: 768px) 130px,
-                       150px"
-                className="rounded-xl object-cover"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+        <Portraits />
       </div>
     </section>
   );

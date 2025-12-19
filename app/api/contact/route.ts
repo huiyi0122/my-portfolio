@@ -9,8 +9,8 @@ export async function POST(request: Request) {
 
     if (!RESEND_API_KEY || !CONTACT_RECEIVER_EMAIL) {
       console.error("环境变量未配置:", {
-        RESEND_API_KEY: !!RESEND_API_KEY,
-        CONTACT_RECEIVER_EMAIL: !!CONTACT_RECEIVER_EMAIL,
+        RESEND_API_KEY: RESEND_API_KEY,
+        CONTACT_RECEIVER_EMAIL: CONTACT_RECEIVER_EMAIL,
       });
       return NextResponse.json(
         { message: "服务器配置错误：环境变量未设置" },
@@ -27,6 +27,9 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // 调试模式打印请求
+    console.log("发送邮件:", { name, email, subject, message });
 
     await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
@@ -49,20 +52,8 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Resend error:", error);
     return NextResponse.json(
-      { message: "邮件发送失败，请稍后再试。" },
+      { message: "邮件发送失败，请稍后再试。", error: (error as any).message },
       { status: 500 }
     );
   }
-}
-
-// app/api/env-test/route.ts
-export async function GET() {
-  console.log("ENV TEST HIT"); // 部署日志可见
-  return new Response(
-    JSON.stringify({
-      RESEND_API_KEY: !!process.env.RESEND_API_KEY,
-      CONTACT_RECEIVER_EMAIL: !!process.env.CONTACT_RECEIVER_EMAIL,
-    }),
-    { status: 200 }
-  );
 }

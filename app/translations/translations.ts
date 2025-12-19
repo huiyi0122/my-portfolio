@@ -27,25 +27,25 @@ export const translations = {
           key: "creative",
           title: "CREATIVE",
           subtitle:
-            "I enjoy thinking outside the box and designing unique solutions that improve user experience and functionality.",
+            "I like exploring different ideas and coming up with solutions that feel thoughtful and actually improve the experience.",
         },
         {
           key: "teamPlayer",
           title: "Team Player",
           subtitle:
-            "I enjoy collaborating with others and contributing positively in a team environment.",
+            "I enjoy working with others, sharing ideas, and contributing to a healthy team environment.",
         },
         {
           key: "problemSolver",
           title: "Problem-Solver",
           subtitle:
-            "I enjoy breaking down complex problems and finding effective solutions.",
+            "I break problems down step by step and focus on finding solutions that make sense.",
         },
         {
           key: "adaptable",
           title: "Adaptable",
           subtitle:
-            "I adapt quickly to new environments, tools, and challenges.",
+            "I’m comfortable picking up new tools and adjusting to new challenges when needed.",
         },
       ],
     },
@@ -63,9 +63,9 @@ export const translations = {
         header: "ABOUT ME",
         title: "INTRODUCTION",
         paragraph1:
-          "Hi, I'm Chai Hui Yi – a developer exploring the full-stack path. I enjoy building things that are practical and user-focused with applications, from UI to back-end logic.",
+          "Hi, I’m Chai Hui Yi. I’m exploring the full-stack path and enjoy building practical, user-focused applications, from clean interfaces to solid back-end logic.",
         paragraph2:
-          "I've recently completed an internship where I worked across both front-end and back-end, and that experience strengthened my interest in becoming a well-rounded full-stack engineer. I'm currently focusing on improving my full-stack fundamentals... writing cleaner, more maintainable code, understanding scalability and learning better design practices.",
+          "I recently completed an internship where I worked on both front-end and back-end tasks. That experience helped me understand how everything connects and confirmed my interest in becoming a well-rounded full-stack developer. Right now, I’m focusing on writing cleaner code, improving scalability, and developing better design habits.",
       },
       experience: {
         title: "EXPERIENCE",
@@ -74,15 +74,15 @@ export const translations = {
           company: "MEO Studio Design",
           duration: "Sep 2024 - Feb 2025",
           tasks: [
-            "Developed full-stack using Next.js, TypeScript and PostgreSQL",
-            "Built internal tools including knowledge management and HR systems",
-            "Implemented authentication, CRUD operations and Docker deployment",
+            "Developed full-stack features using Next.js, TypeScript, and PostgreSQL",
+            "Built internal tools such as knowledge management and HR systems",
+            "Implemented authentication, CRUD features, and Docker-based deployment",
           ],
         },
       },
       focus: {
         header: "CURRENT FOCUS",
-        title: "Building with purpose",
+        title: "Building with intention",
         principles: [
           "Clean Code",
           "Scalability",
@@ -94,20 +94,20 @@ export const translations = {
       },
       skill: {
         header: "SKILLS & TECHNOLOGIES",
-        title: "An Interactive Showcase of My Technical Abilities.",
+        title: "A hands-on overview of the tools and technologies I use.",
       },
       resume: {
         header: "GET IN TOUCH",
-        title: "Interested in working together ?",
+        title: "Interested in working together?",
         button: "Download Resume",
       },
     },
 
     project: {
       title: "Projects",
-      Subtitle: "A selection of my recent work",
+      Subtitle: "Some of my recent work",
       Paragraph:
-        "A collection of full-stack projects showcasing my expertise in modern web technologies, from conception to deployment.",
+        "A selection of full-stack projects where I handled everything from planning and development to deployment.",
 
       ProjectStats: {
         title: "BY THE NUMBERS",
@@ -141,7 +141,7 @@ export const translations = {
       Responsive: {
         title: "RESPONSIVE DESIGN",
         description:
-          "The application is fully responsive, ensuring a seamless experience across desktops, tablets, and mobile devices. The layout adapts to different screen sizes while maintaining full functionality.",
+          "The application is fully responsive and works smoothly across desktop, tablet, and mobile devices. The layout adapts naturally to different screen sizes without sacrificing usability.",
         desktop: "DESKTOP",
         mobile: "MOBILE",
       },
@@ -151,16 +151,16 @@ export const translations = {
           title: "HR Dashboard",
           subtitle: "Interview & Candidate Management System",
           description:
-            "Full-stack dashboard with MS Forms integration, real-time candidate tracking, and comprehensive admin controls.",
+            "A full-stack dashboard with Microsoft Forms integration, real-time candidate tracking, and flexible admin controls.",
           type: "Professional",
           status: "Live",
           details: {
             overview: {
               title: "OVERVIEW",
               description:
-                "The HR Dashboard is a full-stack web application designed to streamline the candidate interview and management process. It integrates with Microsoft Forms to automatically pull in new candidate data, providing HR managers with a real-time, centralized platform for tracking applicant progress, scheduling interviews, and managing feedback.",
+                "The HR Dashboard is a full-stack web application built to simplify interview and candidate management. It pulls candidate data directly from Microsoft Forms and gives HR teams a clear, real-time view of the hiring process.",
               details:
-                "Built with Next.js and a PostgreSQL backend, the system features secure authentication, comprehensive CRUD functionalities for candidate and interview management, and is deployed via Docker for scalability and consistency.",
+                "Built with Next.js and PostgreSQL, the system includes secure authentication, full CRUD functionality, and Docker-based deployment for consistency and scalability.",
             },
             goal: {
               title: "PROJECT GOAL",
@@ -313,14 +313,14 @@ export const translations = {
       title: "Get in Touch !",
       subtitle: "I'd like to hear from you!",
       paragraph:
-        "If you have any inquiries or just want to say hi, please use the contact form. I'll get back to you as soon as possible!",
+        "If you have a question, a project idea, or just want to say hi, feel free to drop me a message. I’ll get back to you as soon as I can.",
       connect: "Connect with me on",
       firstName: "First Name",
       lastName: "Last Name",
       email: "Email Address",
       message: "Your Message",
       sendMessage: "Send Message",
-      content: "Tell me about your project, or just say hi...",
+      content: "Tell me about your project, or just say hi.",
     },
   },
   zh: {
@@ -334,38 +334,40 @@ export const translations = {
       greeting: "嗨，我是",
       name: "蔡慧仪",
       description:
-        "一位全栈开发者，致力于构建可扩展、以用户为中心的应用程序，同时不断学习和进步。",
-      viewProject: "查看我的项目",
+        "我是一名全栈开发者，专注于打造实用、以使用者为出发点的应用，并持续提升自己的技术与设计能力。",
+      viewProject: "查看项目",
       aboutMe: "关于我",
     },
+
     traits: {
       list: [
         {
           key: "creative",
           title: "创意思维",
           subtitle:
-            "我喜欢跳出框框思考，设计独特的解决方案来改善用户体验和功能。",
+            "我喜欢换个角度思考问题，想出既实用又能让体验更好的解决方式。",
         },
+
         {
           key: "teamPlayer",
           title: "团队合作",
-          subtitle: "我乐于与他人协作，在团队中积极贡献自己的力量。",
+          subtitle: "我重视沟通与配合，能在团队中清楚表达想法并积极参与合作。",
         },
         {
           key: "problemSolver",
-          title: "问题解决者",
-          subtitle: "我善于拆解复杂问题，并寻找有效的解决方案。",
+          title: "问题解决",
+          subtitle: "我习惯把复杂的问题拆解成小步骤，逐一找出合适的解决方法。",
         },
         {
           key: "adaptable",
-          title: "适应能力强",
-          subtitle: "我能够快速适应新的环境、工具和挑战。",
+          title: "适应力强",
+          subtitle: "我对新环境与新工具保持开放态度，能快速适应并投入工作。",
         },
       ],
     },
 
     contact: {
-      title: "联系我 !",
+      title: "一起聊聊吧",
       name: "蔡慧仪",
       role: "网页开发者 & UI 设计师",
       location: "马来西亚，砂拉越，古晋",
@@ -377,9 +379,9 @@ export const translations = {
         header: "关于我",
         title: "简介",
         paragraph1:
-          "嗨，我是 蔡慧仪，是一位探索全栈开发道路的开发者。我喜欢构建实用且以用户为中心的应用程序，从 UI 到后端逻辑。",
+          "嗨，我是蔡慧仪，一名正在探索全栈开发的开发者。我喜欢把想法变成实用又好用的应用，从界面设计到后端逻辑都会动手做。",
         paragraph2:
-          "我最近完成了一次实习，在前端和后端都有工作经验，这段经历加强了我成为全面的全栈工程师的兴趣。我目前专注于提升全栈基础... 编写更清晰、更易维护的代码，理解可扩展性并学习更好的设计实践。",
+          "我最近完成了一段实习，参与了前端和后端的工作，这让我更清楚自己想成为全面的全栈开发者。目前，我专注于写出更清晰、易维护的代码，同时学习如何让系统更稳定和易扩展，也在提升设计能力。",
       },
       experience: {
         title: "工作经验",
@@ -388,31 +390,33 @@ export const translations = {
           company: "MEO Studio Design",
           duration: "2024年9月 - 2025年2月",
           tasks: [
-            "使用 Next.js、TypeScript 和 PostgreSQL 开发全栈应用",
-            "构建内部工具，包括知识管理和人力资源系统",
-            "实现身份验证、CRUD 操作和 Docker 部署",
+            "用 Next.js 和 TypeScript 开发全栈功能，让前端和后端更顺畅地配合",
+            "参与构建内部工具，比如知识管理系统和人力资源系统，帮助团队提升工作效率",
+            "实现用户身份验证和 CRUD 功能，并使用 Docker 部署应用，确保系统稳定运行",
           ],
         },
       },
+
       focus: {
         header: "当前关注点",
         title: "有目的的建设",
         principles: [
-          "简洁代码",
-          "可扩展性",
-          "设计模式",
-          "API 设计",
-          "数据库优化",
-          "用户体验",
+          "写清晰、易读的代码，让团队和自己都更容易维护",
+          "设计系统时考虑未来扩展和可持续发展",
+          "使用合适的设计模式，让代码更有条理",
+          "规划 API 时注重简单易用和稳定性",
+          "优化数据库，让应用更高效可靠",
+          "关注用户体验，让功能真正好用又直观",
         ],
       },
+
       skill: {
         header: "技能与技术",
-        title: "我的技术能力互动展示。",
+        title: "展示我在开发中用到的工具和技术。",
       },
       resume: {
-        header: "快来联系我吧",
-        title: "有兴趣一起合作吗？",
+        header: "想聊聊吗？",
+        title: "如果有合作或项目想法，欢迎联系我！",
         button: "下载简历",
       },
     },
@@ -420,7 +424,7 @@ export const translations = {
       title: "项目",
       Subtitle: "近期作品精选",
       Paragraph:
-        "一系列全端项目，展示我从构思、设计到开发与部署的现代 Web 技术实践经验。",
+        "这里展示一些我最近完成的全端项目，从最初的构思、界面设计，到实际开发和上线，每个项目都体现了我在现代 Web 技术上的实践经验。",
 
       ProjectStats: {
         title: "数据一览",
@@ -454,7 +458,7 @@ export const translations = {
       Responsive: {
         title: "响应式设计",
         description:
-          "该应用程序完全响应式，确保在台式机、平板电脑和移动设备上都能获得无缝体验。布局适应不同的屏幕尺寸，同时保持完整的功能。",
+          "这个应用在桌面、平板和手机上都能顺畅使用，布局会根据不同屏幕自动调整，同时保持所有功能完整可用。",
         desktop: "桌面端",
         mobile: "移动端",
       },
@@ -464,23 +468,23 @@ export const translations = {
           title: "人资管理后台",
           subtitle: "面试与候选人管理系统",
           description:
-            "全端人资管理后台，整合 Microsoft Forms，实现候选人实时追踪与完整的管理员控制功能。",
+            "一个全端的人资管理后台，整合 Microsoft Forms，可以实时追踪候选人，还能方便管理员操作。",
           type: "专业项目",
           status: "已上线",
           details: {
             overview: {
               title: "总览",
               description:
-                "人资管理后台是一个全栈 Web 应用，旨在简化候选人面试和管理流程。它与 Microsoft Forms 集成，可自动提取新的候选人数据，为人力资源经理提供一个实时的集中式平台，用于跟踪申请人进度、安排面试和管理反馈。",
+                "这个人资管理后台是我开发的全栈 Web 应用，目的是让候选人面试和管理流程更顺畅。它能从 Microsoft Forms 自动获取新候选人信息，让 HR 可以在同一个平台实时查看申请进度、安排面试和管理反馈。",
               details:
-                "该系统采用 Next.js 和 PostgreSQL 后端构建，具有安全身份验证、全面的候选人和面试管理 CRUD 功能，并通过 Docker 进行部署，以实现可扩展性和一致性。",
+                "系统使用 Next.js 构建前端，后端通过安全身份验证管理候选人和面试信息，并用 Docker 部署，保证系统稳定运行和后续扩展方便。",
             },
             goal: {
               title: "项目目标",
               description:
-                "创建一个高效、自动化且用户友好的内部工具，以减少人力资源团队的手动数据输入，提高候选人跟踪的准确性，并提供整个招聘流程的清晰概览。",
+                "我希望打造一个高效、自动化且易用的内部工具，减少 HR 团队手动输入数据，提高候选人跟踪准确度，同时让招聘流程一目了然。",
               details:
-                "主要目标是用动态 Web 应用程序取代手动的、基于电子表格的系统，从而实现更快的决策和更有条理的工作流程。",
+                "目标是用动态 Web 应用替代手动的电子表格系统，让团队能更快做决策、工作流程更有条理。",
             },
             audience: {
               title: "目标受众",
@@ -489,18 +493,17 @@ export const translations = {
                   icon: "/images/light_mode/project/audience-1.png",
                   title: "人力资源经理",
                   description:
-                    "需要一个集中式仪表板来管理候选人、安排面试和查看反馈的主要用户。",
+                    "主要用户，需要一个集中仪表板来管理候选人、安排面试和查看反馈。",
                 },
                 {
                   icon: "/images/light_mode/project/audience-2.png",
                   title: "面试官",
-                  description:
-                    "需要访问候选人信息并以简单方式提交面试反馈的团队成员。",
+                  description: "团队成员，可方便查看候选人信息并提交面试反馈。",
                 },
                 {
                   icon: "/images/light_mode/project/audience-3.png",
                   title: "系统管理员",
-                  description: "负责维护应用程序和管理用户访问权限的技术人员。",
+                  description: "负责维护系统和管理用户权限的技术人员。",
                 },
               ],
             },
@@ -517,23 +520,23 @@ export const translations = {
           title: "企业知识库",
           subtitle: "内部知识管理系统",
           description:
-            "集中式企业知识平台，具备角色权限控管、协作编辑功能，并以 Docker 进行部署。",
+            "一个内部知识管理平台，支持角色权限、协作编辑，并通过 Docker 部署，方便团队使用。",
           type: "专业项目",
           status: "未公开",
           details: {
             overview: {
               title: "总览",
               description:
-                "企业知识库是一个内部知识管理系统，旨在集中管理公司信息、文档和流程。它提供了一个安全的协作环境，员工可以轻松创建、共享和查找所需信息。",
+                "这个企业知识库是我参与开发的内部系统，用来集中管理公司信息、文档和流程。员工可以轻松创建、共享和查找所需内容，协作更顺畅。",
               details:
-                "该应用具有基于角色的访问控制和用于协作创建内容的富文本编辑器，采用 Next.js 构建并使用 Docker 部署，确保了内部知识共享的可靠和可扩展解决方案。",
+                "应用支持基于角色的权限管理，并内置富文本编辑器方便多人协作。前端使用 Next.js 构建，Docker 部署保证系统稳定可靠，也便于后续扩展。",
             },
             goal: {
               title: "项目目标",
               description:
-                "为所有公司相关信息建立一个单一的真实来源，减少知识孤岛，并改善新员工的入职流程。该平台旨在做到直观、安全且易于维护。",
+                "我希望建立一个公司内部的信息中心，减少知识孤岛，让新员工更快上手，同时保持系统直观、安全且易维护。",
               details:
-                "关键目标包括创建一个权限系统来控制对敏感信息的访问，并为非技术用户提供一个功能强大且简单的编辑器。",
+                "具体做法包括搭建权限系统控制敏感信息访问，并提供简单易用的编辑器，让非技术用户也能方便维护内容。",
             },
             audience: {
               title: "目标受众",
@@ -541,18 +544,18 @@ export const translations = {
                 {
                   icon: "/images/light_mode/project/audience-4.png",
                   title: "所有员工",
-                  description: "需要访问公司政策、项目文档和团队信息的用户。",
+                  description: "需要访问公司政策、项目文档和团队信息的同事。",
                 },
                 {
                   icon: "/images/light_mode/project/audience-5.png",
                   title: "内容创建者",
                   description:
-                    "来自不同部门的指定团队成员，负责创建和维护知识文章。",
+                    "来自不同部门的团队成员，负责撰写和更新知识文章。",
                 },
                 {
                   icon: "/images/light_mode/project/audience-6.png",
                   title: "管理员",
-                  description: "管理平台、控制用户权限和监督内容结构的用户。",
+                  description: "负责管理平台、控制权限和维护内容结构的人。",
                 },
               ],
             },
@@ -569,23 +572,23 @@ export const translations = {
           title: "FarmHub",
           subtitle: "电商与预约平台",
           description:
-            "提供农场导览预约与新鲜农产品购买的 Web 平台，并整合线上支付系统。",
+            "这是一个为本地农场设计的电商与预约平台，顾客可以在线预订农场导览、购买新鲜农产品，还能完成支付结算。",
           type: "学术项目",
           status: "已完成",
           details: {
             overview: {
               title: "总览",
               description:
-                "FarmHub 是一个学术项目，作为一个本地农场的电子商务和预订平台。它允许顾客预订农场参观、购买新鲜农产品，并了解更多关于农场的活动。该平台包括一个完整的购物车和带有支付集成功能的结账流程。",
+                "FarmHub 是我参与开发的学术项目，面向本地农场客户，提供线上预约和购物功能。用户可以预订农场参观、购买新鲜农产品，并了解农场活动，整个流程包括购物车和支付结算。",
               details:
-                "该项目使用 PHP 和 MySQL 开发，展示了基础的 Web 开发技能，包括数据库管理、服务器端逻辑和前端用户界面创建。",
+                "项目使用 PHP 和 MySQL 开发，展示了我在数据库管理、服务器端逻辑和前端界面开发的基础技能。",
             },
             goal: {
               title: "项目目标",
               description:
-                "主要目标是通过创建一个功能性的、真实世界的应用程序来应用和展示 Web 开发基础知识。该项目旨在为希望与本地农场互动的顾客提供无缝的在线体验。",
+                "我希望通过这个项目实践 Web 开发基础，打造一个真实可用的应用，为顾客提供顺畅的线上体验。",
               details:
-                "目标包括为农场主实现一个安全的用户认证系统、一个产品和预订管理系统，以及为顾客提供一个直观的购物体验。",
+                "具体目标包括为农场主搭建安全的用户认证系统、产品和预订管理功能，同时让顾客能轻松浏览、下单和结账。",
             },
             audience: {
               title: "目标受众",
@@ -593,18 +596,17 @@ export const translations = {
                 {
                   icon: "/images/light_mode/project/audience-7.png",
                   title: "本地顾客",
-                  description:
-                    "社区中希望购买新鲜本地产品并参加农场活动的人们。",
+                  description: "社区中想买新鲜农产品、参与农场活动的人。",
                 },
                 {
                   icon: "/images/light_mode/project/audience-8.png",
                   title: "家庭与游客",
-                  description: "对教育和娱乐性农场参观感兴趣的个人和团体。",
+                  description: "对教育和休闲农场参观感兴趣的个人或团体。",
                 },
                 {
                   icon: "/images/light_mode/project/audience-9.png",
                   title: "农场主",
-                  description: "在平台上管理产品、预订和内容的管理员。",
+                  description: "负责管理产品、预订和平台内容的管理员。",
                 },
               ],
             },
@@ -619,17 +621,17 @@ export const translations = {
       },
     },
     Contact: {
-      title: "联系我 !",
-      subtitle: "期待收到你的消息！",
+      title: "联系我",
+      subtitle: "很高兴收到你的消息！",
       paragraph:
-        "如果你有任何问题或只是想打个招呼，请使用联系表格。我会尽快回复你！",
-      connect: "在以下平台与我联系",
+        "不管是有问题、合作想法，还是只是想打个招呼，都可以通过下面的联系表单找我，我会尽快回复你。",
+      connect: "也可以通过以下平台联系我",
       firstName: "名字",
       lastName: "姓氏",
       email: "电子邮箱",
-      message: "你的留言",
-      sendMessage: "发送留言",
-      content: "跟我说说你的项目，或者只是打个招呼也行……",
+      message: "留言内容",
+      sendMessage: "发送",
+      content: "跟我聊聊你的项目，或者随便打个招呼都可以 🙂",
     },
   },
 };

@@ -23,7 +23,7 @@ export default function ProjectAudience({
 
   return (
     <section
-      className={`h-screen w-full flex items-center px-6 relative overflow-hidden transition-all duration-700 ${
+      className={`min-h-screen w-full flex md:items-center px-6 py-24 md:py-0 relative overflow-hidden transition-all duration-700 ${
         darkMode ? "bg-zinc-950" : "bg-[#215245]"
       }`}
     >
@@ -36,7 +36,7 @@ export default function ProjectAudience({
       >
         {/* Section Label */}
         <motion.p
-          className={`text-xs font-semibold tracking-[0.2em] uppercase text-center mb-16 transition-colors duration-700 ${
+          className={`text-xs font-semibold tracking-[0.2em] uppercase text-center mb-12 md:mb-16 transition-colors duration-700 ${
             darkMode ? "text-zinc-500" : "text-[#a8d5c9]"
           }`}
           initial={{ opacity: 0 }}
@@ -52,11 +52,11 @@ export default function ProjectAudience({
         </motion.p>
 
         {/* Audience Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {project.audience.items.map((audience, index) => (
             <motion.div
               key={index}
-              className={`p-8 rounded-3xl text-center transition-all duration-700 ${
+              className={`p-6 md:p-8 rounded-3xl text-center transition-all duration-700 ${
                 darkMode
                   ? "bg-zinc-900/50 ring-1 ring-white/10"
                   : "bg-[#2d6b5d]/40 ring-1 ring-white/20 backdrop-blur-sm"
@@ -71,17 +71,17 @@ export default function ProjectAudience({
               viewport={{ once: false }}
               whileHover={{ y: -4, scale: 1.02 }}
             >
-              <div className="mb-6 flex justify-center">
+              <div className="mb-4 md:mb-6 flex justify-center">
                 <Image
                   src={audience.icon}
                   alt={audience.title}
                   width={80}
                   height={80}
-                  className="w-20 h-20 object-contain"
+                  className="w-16 h-16 md:w-20 md:h-20 object-contain"
                 />
               </div>
               <h3
-                className={`text-xl font-medium mb-4 transition-colors duration-700 ${
+                className={`text-lg md:text-xl font-medium mb-3 md:mb-4 transition-colors duration-700 ${
                   darkMode ? "text-white" : "text-[#e8f5f2]"
                 }`}
                 style={{

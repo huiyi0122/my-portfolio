@@ -22,7 +22,7 @@ export default function ProjectContent({
   const { techStack, title, subtitle, type, year } = project;
 
   const techLogos: { [key: string]: string } = {
-    "Next.js": "/images/icons/nextjs.png",
+    "Next.js": "/images/icons/nextjs.jpg",
     React: "/images/icons/react.png",
     TypeScript: "/images/icons/typescript.png",
     Docker: "/images/icons/docker.svg",
@@ -37,7 +37,7 @@ export default function ProjectContent({
 
   return (
     <section
-      className={`h-screen w-full flex items-center px-6 relative overflow-hidden transition-all duration-700 ${
+      className={`min-h-screen w-full flex items-center px-6 py-24 md:py-0 relative overflow-hidden transition-all duration-700 ${
         darkMode ? "bg-zinc-950" : "bg-white"
       }`}
     >
@@ -48,7 +48,7 @@ export default function ProjectContent({
         transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
         viewport={{ once: false, amount: 0.3 }}
       >
-        <div className="grid md:grid-cols-2 gap-20">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
           {/* Left: Title & Description */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -69,7 +69,7 @@ export default function ProjectContent({
             </p>
 
             <h1
-              className={`text-5xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6 transition-colors duration-700 ${
+              className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6 transition-colors duration-700 ${
                 darkMode ? "text-white" : "text-zinc-900"
               }`}
               style={{
@@ -84,7 +84,7 @@ export default function ProjectContent({
             </h1>
 
             <p
-              className={`text-lg leading-relaxed transition-colors duration-700 ${
+              className={`text-base sm:text-lg leading-relaxed transition-colors duration-700 ${
                 darkMode ? "text-zinc-400" : "text-zinc-600"
               }`}
               style={{
@@ -100,7 +100,7 @@ export default function ProjectContent({
 
           {/* Right: Tech Stack */}
           <motion.div
-            className="flex items-end"
+            className="flex md:items-end"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -119,7 +119,7 @@ export default function ProjectContent({
                 TECH STACK
               </p>
 
-              <div className="flex flex-wrap gap-5 items-center">
+              <div className="flex flex-wrap gap-4 sm:gap-5 items-center">
                 {techStack.map((tech) =>
                   techLogos[tech] ? (
                     <div key={tech} className="flex items-center gap-2">
@@ -128,10 +128,10 @@ export default function ProjectContent({
                         alt={tech}
                         width={50}
                         height={50}
-                        className="w-12 h-12 object-contain"
+                        className="w-8 h-8 sm:w-12 sm:h-12 object-contain"
                       />
                       <span
-                        className={`text-sm font-mono transition-colors duration-700 ${
+                        className={`text-xs sm:text-sm font-mono transition-colors duration-700 ${
                           darkMode ? "text-zinc-400" : "text-zinc-600"
                         }`}
                         style={{

@@ -1,8 +1,10 @@
 /*C:\Users\user\my-portfolio\app\components\project\ProjectCTA.tsx*/
 "use client";
 
-import Link from "next/link";
+import NextLink from "next/link";
 import { motion } from "framer-motion";
+
+const Link = motion(NextLink);
 
 interface ProjectCTAProps {
   darkMode: boolean;
@@ -68,23 +70,22 @@ export default function ProjectCTA({ darkMode }: ProjectCTAProps) {
             View on GitHub
           </motion.a>
 
-          <motion.div whileHover={{ y: -2, scale: 1.02 }}>
-            <Link
-              href="/#contact"
-              className={`inline-block px-8 py-4 rounded-full text-base font-medium transition-all duration-300 ${
-                darkMode
-                  ? "bg-transparent text-white ring-1 ring-white/20 hover:bg-white/5"
-                  : "bg-transparent text-[#e8f5f2] ring-1 ring-[#e8f5f2]/30 hover:bg-white/10"
-              }`}
-              style={{
-                fontFamily:
-                  "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Get in Touch
-            </Link>
-          </motion.div>
+          <Link
+            href="/#contact"
+            className={`inline-block px-8 py-4 rounded-full text-base font-medium transition-all duration-300 ${
+              darkMode
+                ? "bg-transparent text-white ring-1 ring-white/20 hover:bg-white/5"
+                : "bg-transparent text-[#e8f5f2] ring-1 ring-[#e8f5f2]/30 hover:bg-white/10"
+            }`}
+            whileHover={{ y: -2, scale: 1.02 }}
+            style={{
+              fontFamily:
+                "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Get in Touch
+          </Link>
         </motion.div>
       </motion.div>
     </section>

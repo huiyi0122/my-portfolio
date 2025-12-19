@@ -22,7 +22,7 @@ export default function ProjectOverview({
 
   return (
     <section
-      className={`h-screen w-full flex items-center px-6 relative overflow-hidden transition-all duration-700 ${
+      className={`min-h-screen w-full flex md:items-center px-6 py-24 md:py-0 relative overflow-hidden transition-all duration-700 ${
         darkMode ? "bg-zinc-900" : "bg-white"
       }`}
     >
@@ -35,7 +35,7 @@ export default function ProjectOverview({
       >
         {/* Section Label */}
         <motion.p
-          className={`text-xs font-semibold tracking-[0.2em] uppercase text-center mb-12 transition-colors duration-700 ${
+          className={`text-xs font-semibold tracking-[0.2em] uppercase text-center mb-8 md:mb-12 transition-colors duration-700 ${
             darkMode ? "text-zinc-500" : "text-zinc-500"
           }`}
           initial={{ opacity: 0 }}
@@ -52,7 +52,7 @@ export default function ProjectOverview({
 
         {/* Description */}
         <motion.p
-          className={`text-xl text-center mb-8 leading-relaxed transition-colors duration-700 ${
+          className={`text-lg sm:text-xl text-center mb-6 md:mb-8 leading-relaxed transition-colors duration-700 ${
             darkMode ? "text-white" : "text-zinc-900"
           }`}
           initial={{ opacity: 0, y: 15 }}
@@ -71,7 +71,7 @@ export default function ProjectOverview({
 
         {/* Details */}
         <motion.p
-          className={`text-base text-center leading-relaxed max-w-3xl mx-auto transition-colors duration-700 ${
+          className={`text-sm sm:text-base text-center leading-relaxed max-w-3xl mx-auto transition-colors duration-700 ${
             darkMode ? "text-zinc-400" : "text-zinc-600"
           }`}
           initial={{ opacity: 0, y: 15 }}
